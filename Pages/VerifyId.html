@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KYC Verification</title>
+</head>
+
+<body>
+
+    <h1>Identity Verification</h1>
+
+    <button id="verifyButton">
+        Verify My Identity
+    </button>
+
+    <p id="message"></p>
+
+    <script type="module">
+
+        import {IdVerificationSessionId} from "../Backend/KYCconnection.js"
+
+        document
+            .getElementById("VerifyButton")
+            .addEventListener("click", async () => {
+
+                try {
+
+                    const data = await IdVerificationSessionId();
+                    if(data?.status=='succesful'){
+                        window.location.href = data.Url;
+                    }
+                    if(data?.status=='error'){
+                        alert("Failed to start a session ")
+                    }
+                    
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    document.getElementById("message")
+                        .textContent = error.message;
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

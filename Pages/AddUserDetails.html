@@ -1,0 +1,16 @@
+<script type="module">
+    import {AddUserDetails} from "../Cloud/Authentication/AddUserDetails.js"
+    document.getElementById('Submit').addEventListener("click",async () => {
+        const name=document.getElementById("Name").value;
+        const surname=document.getElementById("Surname").value;
+        const username=document.getElementById("Username").value;
+        
+        const adduserdetails=await AddUserDetails(name, surname, username);
+        if(adduserdetails.status=='successful'){
+            
+        }
+        if(adduserdetails.status=='error'){
+            alert("Failed to add user details")
+        }
+    })
+</script>

@@ -1,0 +1,26 @@
+<script type="module">
+    import {SignUp} from '../Cloud/Authentication/SignUp.js'
+    import {RetrieveUserDetails} from "../Cloud/Functions/RetrieveUserDetails.js"
+    document.getElementById("Submit").addEventListener("click",async () => {
+        const email=document.getElementById("email").value;
+        const password=document.getElementById("password").value;
+        const signup=await SignUp(email,password)
+        if(signup.status='successful'){
+            alert("successful signed up!!")
+            const data=await RetrieveUserDetails()
+            if(data&&data.length>0){
+                if(data[0].Verified==true){
+                    window.location.href="Dashboard.html"
+                }
+                if(data[0].Verified==false){
+                    window.location.href="VerifyId.html"
+                }
+            }else{
+                window.location.href="AddUserDetail.html"
+            }
+        }
+        if(signup.status=='error'){
+            alert(data.error)
+        }
+    })
+</script>

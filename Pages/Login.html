@@ -1,0 +1,14 @@
+<script type="module">
+    import {Login} from '../Cloud/Authentication/Login.js'
+    document.getElementById("Submit").addEventListener("click",async () => {
+        const email=document.getElementById("email").value;
+        const password=document.getElementById("password").value;
+        const login=await Login(email,password)
+        if(login.status='successful'){
+            alert("successful signed up!!")
+        }
+        if(login.status=='error'){
+            alert(data.error)
+        }
+    })
+</script>
