@@ -1,228 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketView | Professional Trading Terminal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary: #fbbf24;
-            --primary-glow: rgba(251, 191, 36, 0.3);
-            --glass: rgba(13, 22, 30, 0.65);
-            --glass-border: rgba(245, 158, 11, 0.3);
-            --text-main: #FFFFFF;
-            --text-dim: #94a3b8;
-            --danger: #f87171;
-            --success: #34d399;
+<script type="module">
+    import {SignUp} from '../Cloud/Authentication/SignUp.js'
+    import {RetrieveUserDetails} from "../Cloud/Functions/RetrieveUserDetails.js"
+    document.getElementById("Submit").addEventListener("click",async () => {
+        const email=document.getElementById("email").value;
+        const password=document.getElementById("password").value;
+        const signup=await SignUp(email,password)
+        if(signup.status='successful'){
+            alert("successful signed up!!")
+            const data=await RetrieveUserDetails()
+            if(data&&data.length>0){
+                if(data[0].Verified==true){
+                    window.location.href="Dashboard.html"
+                }
+                if(data[0].Verified==false){
+                    window.location.href="VerifyId.html"
+                }
+            }else{
+                window.location.href="AddUserDetail.html"
+            }
         }
-
-        .divider { margin: 0 8px; color: rgba(255,255,255,0.2); }
-
-        body, html {
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            height: 100vh;
-            font-family: 'Archivo', sans-serif;
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            overflow: hidden;
-    
-            background: linear-gradient(rgba(10, 25, 30, 0.7), rgba(5, 12, 18, 0.85)), url('bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        if(signup.status=='error'){
+            alert(data.error)
         }
-
-        .auth-console {
-            width: 440px;
-            padding: 30px 35px;
-            background: var(--glass);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(245, 158, 11, 0.5);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            text-align: center;
-            
-            margin: 1cm 0;
-            max-height: calc(100vh - 2.5cm);
-            overflow-y: auto;
-            scrollbar-width: none;
-            
-            position: relative;
-            z-index: 10;
-            animation: consoleFadeIn 0.8s ease-out;
-        }
-        .auth-console::-webkit-scrollbar { display: none; }
-
-        @keyframes consoleFadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-ring {
-            width: 75px; 
-            height: 75px;
-            margin: 0 auto 12px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            background: rgba(8, 15, 22, 0.95);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-        }
-        .logo-ring img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block;
-        }
-
-        .brand-name { font-size: 1.25rem; font-weight: 800; letter-spacing: 4px; color: var(--primary); text-transform: uppercase; margin: 0; }
-        .brand-tagline { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
-
-        h2 { font-size: 1.2rem; margin: 15px 0 5px; color: #fff; }
-        .view-subtext { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 20px; }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-
-        .input-group { position: relative; text-align: left; margin-bottom: 14px; }
-        .full-width { grid-column: span 2; }
-
-        .input-group i {
-            position: absolute; left: 14px; top: 14px;
-            color: var(--primary); font-size: 0.85rem; opacity: 0.8;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px 12px 42px;
-            background: rgba(8, 15, 22, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            color: #fff;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8rem;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none; 
-            border-color: var(--primary);
-            background: rgba(8, 15, 22, 0.95);
-            box-shadow: 0 0 12px var(--primary-glow);
-        }
-
-        .submit-btn {
-            width: 100%; 
-            padding: 13px;
-            background: rgba(245, 158, 11, 0.2); 
-            color: #fff;
-            border: 1px solid rgba(245, 158, 11, 0.4); 
-            border-radius: 10px;
-            font-weight: 700; 
-            text-transform: uppercase;
-            letter-spacing: 1px; 
-            cursor: pointer;
-            margin-top: 5px;
-            font-size: 0.8rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: none;
-        }
-
-        .status-message {
-            margin-top: 15px; padding: 10px; border-radius: 8px; font-size: 0.75rem;
-            display: none; text-align: center;
-        }
-        .status-message.success { background: rgba(52, 211, 153, 0.2); color: #fff; border: 1px solid var(--success); }
-        .status-message.error { background: rgba(248, 113, 113, 0.2); color: #fff; border: 1px solid var(--danger); }
-
-        .footer-toggle { margin-top: 20px; font-size: 0.75rem; color: var(--text-dim); }
-        .footer-toggle span.link { color: var(--primary); text-decoration: none; font-weight: 700; cursor: pointer; }
-        .footer-toggle span.link:hover { text-decoration: underline; color: #fff; }
-
-        .hidden { display: none !important; }
-        .shake { animation: shake 0.4s ease-in-out; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
-
-        @media (max-width: 500px) {
-            .auth-console { width: 92%; padding: 25px 20px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="auth-console" id="auth-card">
-        <header>
-            <div class="logo-ring">
-                <img src="logo.jpg" alt="MarketView Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <span style="display:none; color:var(--primary); font-weight:800; font-size: 18px;">MV</span>
-            </div>
-            <h1 class="brand-name">MarketView</h1>
-            <div class="brand-tagline">Professional Trading Terminal</div>
-        </header>
-
-        <main>
-
-            <section id="login-view">
-                <h2>Terminal Login</h2>
-                <p class="view-subtext">Access your live market workspace</p>
-                <form id="login-form">
-                    <div class="input-group">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="login-password" class="form-control" placeholder="Password" required>
-                    </div>
-                    <button type="submit" id="login-submit-btn" class="submit-btn">Access Terminal</button>
-                </form>
-                <div id="login-status-message" class="status-message"></div>
-                
-                <div class="footer-toggle">
-                    Don't have an account? <span class="link" id="goto-signup">Create Account</span>
-                </div>
-            </section>
-
-
-            <section id="signup-view" class="hidden">
-                <h2>Create Account</h2>
-                <p class="view-subtext">Register your MarketView credentials.</p>
-                <form id="signup-form">
-                    <div class="input-group">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" id="signup-email" class="form-control" placeholder="Email Address" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="signup-pass" class="form-control" placeholder="Password (min 6 chars)" required>
-                    </div>
-                    <button type="submit" id="signup-submit-btn" class="submit-btn">Continue Setup</button>
-                </form>
-                <div id="signup-status-message" class="status-message"></div>
-                <div class="footer-toggle">Already registered? <span class="link" id="goto-login">Sign In</span></div>
-            </section>
-
-        </main>
-    </div>
-
-</body>
-</html>
+    })
+</script>
