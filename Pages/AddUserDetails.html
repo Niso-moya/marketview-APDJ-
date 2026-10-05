@@ -1,16 +1,648 @@
-<script type="module">
-    import {AddUserDetails} from "../Cloud/Authentication/AddUserDetails.js"
-    document.getElementById('Submit').addEventListener("click",async () => {
-        const name=document.getElementById("Name").value;
-        const surname=document.getElementById("Surname").value;
-        const username=document.getElementById("Username").value;
-        
-        const adduserdetails=await AddUserDetails(name, surname, username);
-        if(adduserdetails.status=='successful'){
-            
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MarketView | Complete Profile</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+
+            --glass: rgba(13, 22, 30, 0.65);
+            --glass-border: rgba(245, 158, 11, 0.3);
+
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+
+            --danger: #f87171;
+            --success: #34d399;
         }
-        if(adduserdetails.status=='error'){
-            alert("Failed to add user details")
+
+        * {
+            box-sizing: border-box;
         }
-    })
-</script>
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Archivo', sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    rgba(10, 25, 30, 0.78),
+                    rgba(5, 12, 18, 0.9)
+                ),
+                url('../bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .auth-console {
+            width: 440px;
+
+            padding: 35px;
+
+            background: var(--glass);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(245, 158, 11, 0.55);
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+            text-align: center;
+
+            position: relative;
+            z-index: 10;
+
+            animation: consoleFadeIn 0.8s ease-out;
+        }
+
+        @keyframes consoleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-ring {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 12px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(8, 15, 22, 0.95);
+
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-ring img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+
+            font-weight: 800;
+
+            letter-spacing: 4px;
+
+            color: var(--primary);
+
+            text-transform: uppercase;
+
+            margin: 0;
+        }
+
+        .brand-tagline {
+            font-size: 0.6rem;
+
+            color: var(--text-dim);
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-top: 4px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+
+            margin: 25px 0 6px;
+
+            color: #fff;
+        }
+
+        .view-subtext {
+            font-size: 0.75rem;
+
+            color: var(--text-dim);
+
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+        .input-group {
+            position: relative;
+
+            text-align: left;
+
+            margin-bottom: 15px;
+        }
+
+        .input-group i {
+            position: absolute;
+
+            left: 14px;
+            top: 14px;
+
+            color: var(--primary);
+
+            font-size: 0.85rem;
+
+            opacity: 0.8;
+
+            z-index: 2;
+        }
+
+        .form-control {
+            width: 100%;
+
+            padding: 13px 15px 13px 42px;
+
+            background: rgba(8, 15, 22, 0.75);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            border-radius: 10px;
+
+            color: #fff;
+
+            font-family: 'Roboto Mono', monospace;
+
+            font-size: 0.8rem;
+
+            transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+        .form-control:focus {
+            outline: none;
+
+            border-color: var(--primary);
+
+            background: rgba(8, 15, 22, 0.95);
+
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 8px;
+
+            background: rgba(245, 158, 11, 0.2);
+
+            color: #fff;
+
+            border: 1px solid rgba(245, 158, 11, 0.45);
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            font-size: 0.8rem;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+            transition: all 0.25s ease;
+        }
+
+        .submit-btn:hover {
+            background: rgba(245, 158, 11, 0.35);
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 18px rgba(251, 191, 36, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .status-message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-size: 0.75rem;
+
+            text-align: center;
+        }
+
+        .status-message.success {
+            display: block;
+
+            background: rgba(52, 211, 153, 0.12);
+
+            color: #fff;
+
+            border: 1px solid var(--success);
+        }
+
+        .status-message.error {
+            display: block;
+
+            background: rgba(248, 113, 113, 0.12);
+
+            color: #fff;
+
+            border: 1px solid var(--danger);
+        }
+
+        .profile-note {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 22px;
+
+            padding: 11px 13px;
+
+            border-radius: 9px;
+
+            background: rgba(8, 15, 22, 0.45);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            text-align: left;
+        }
+
+        .profile-note i {
+            color: var(--primary);
+
+            font-size: 0.8rem;
+        }
+
+        .profile-note span {
+            color: var(--text-dim);
+
+            font-size: 0.65rem;
+
+            line-height: 1.4;
+        }
+
+        .step-indicator {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 24px;
+        }
+
+        .step {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .step.active {
+            width: 22px;
+
+            border-radius: 10px;
+
+            background: var(--primary);
+
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        @media (max-width: 500px) {
+            .auth-console {
+                width: 92%;
+
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-console">
+
+        <header>
+
+            <div class="logo-ring">
+
+                <img
+                    src="../logo.jpg"
+                    alt="MarketView Logo"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='block';
+                    "
+                >
+
+                <span
+                    style="
+                        display:none;
+                        color:var(--primary);
+                        font-weight:800;
+                        font-size:18px;
+                    "
+                >
+                    MV
+                </span>
+
+            </div>
+
+            <h1 class="brand-name">
+                MarketView
+            </h1>
+
+            <div class="brand-tagline">
+                Professional Trading Terminal
+            </div>
+
+        </header>
+
+
+        <main>
+
+            <h2>
+                Complete Your Profile
+            </h2>
+
+            <p class="view-subtext">
+                Set up your MarketView identity before entering your workspace.
+            </p>
+
+
+            <form id="user-details-form">
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="Name"
+                        class="form-control"
+                        placeholder="First Name"
+                        autocomplete="given-name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    <input
+                        type="text"
+                        id="Surname"
+                        class="form-control"
+                        placeholder="Surname"
+                        autocomplete="family-name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-at"></i>
+
+                    <input
+                        type="text"
+                        id="Username"
+                        class="form-control"
+                        placeholder="Choose Username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="Submit"
+                    class="submit-btn"
+                >
+                    Continue to Verification
+                </button>
+
+            </form>
+
+
+            <div
+                id="status-message"
+                class="status-message"
+            ></div>
+
+
+            <div class="profile-note">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Your profile information is used to identify your
+                    MarketView account and personalize your trading workspace.
+                </span>
+
+            </div>
+
+
+            <div class="step-indicator">
+
+                <div class="step active"></div>
+
+                <div class="step"></div>
+
+                <div class="step"></div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script type="module">
+
+        import { AddUserDetails }
+            from "../Cloud/Authentication/AddUserDetails.js";
+
+
+        document
+            .getElementById("user-details-form")
+            .addEventListener("submit", async (event) => {
+
+                event.preventDefault();
+
+
+                const name =
+                    document.getElementById("Name").value.trim();
+
+                const surname =
+                    document.getElementById("Surname").value.trim();
+
+                const username =
+                    document.getElementById("Username").value.trim();
+
+
+                if (!name || !surname || !username) {
+                    return;
+                }
+
+
+                const submitButton =
+                    document.getElementById("Submit");
+
+                const statusMessage =
+                    document.getElementById("status-message");
+
+
+                submitButton.disabled = true;
+
+                submitButton.textContent = "Saving Profile...";
+
+
+                try {
+
+                    const adduserdetails =
+                        await AddUserDetails(
+                            name,
+                            surname,
+                            username
+                        );
+
+
+                    if (adduserdetails.status === "successful") {
+
+                        statusMessage.textContent =
+                            "Profile created successfully.";
+
+                        statusMessage.className =
+                            "status-message success";
+
+
+                        submitButton.textContent =
+                            "Profile Complete";
+
+
+                        setTimeout(() => {
+
+                            window.location.href =
+                                "VerifyId.html";
+
+                        }, 700);
+
+                    }
+
+
+                    if (adduserdetails.status === "error") {
+
+                        statusMessage.textContent =
+                            "Failed to add user details.";
+
+                        statusMessage.className =
+                            "status-message error";
+
+                        submitButton.disabled = false;
+
+                        submitButton.textContent =
+                            "Continue to Verification";
+                    }
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    statusMessage.textContent =
+                        "An unexpected error occurred.";
+
+                    statusMessage.className =
+                        "status-message error";
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Continue to Verification";
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>
