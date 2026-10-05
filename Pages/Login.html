@@ -10,7 +10,7 @@
             const data=await RetrieveUserDetails()
             if(data&&data.length>0){
                 if(data[0].Verified==true){
-                    window.location.href="Dashboard.html"
+                    window.location.href="buyer-dashboard.html"
                 }
                 if(data[0].Verified==false){
                     window.location.href="VerifyId.html"

@@ -1,4 +1,4 @@
-import { supabase } from "../Authentication/AuthConnection";
+import { supabase } from "../Authentication/AuthConnection.js"
 
 export async function DeclineOrder(Orderid) {
     try {

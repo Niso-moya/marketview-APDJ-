@@ -1,44 +1,429 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>KYC Verification</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MarketView | Identity Verification</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.75);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --success: #34d399;
+            --danger: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+
+            font-family: 'Archivo', sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    rgba(10, 25, 30, 0.7),
+                    rgba(5, 12, 18, 0.9)
+                ),
+                url('../bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            color: var(--text-main);
+        }
+
+        .verification-console {
+            width: 470px;
+            max-width: 92%;
+
+            padding: 35px;
+
+            background: var(--glass);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(245, 158, 11, 0.55);
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+            text-align: center;
+
+            animation: consoleFadeIn 0.7s ease-out;
+        }
+
+        @keyframes consoleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-ring {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(8, 15, 22, 0.95);
+
+            border: 1px solid rgba(245, 158, 11, 0.35);
+
+            box-shadow:
+                0 0 20px rgba(245, 158, 11, 0.12);
+        }
+
+        .icon-ring i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .brand-tagline {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        h1 {
+            font-size: 1.35rem;
+            margin: 25px 0 12px;
+        }
+
+        .intro {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .reason-box {
+            text-align: left;
+
+            background: rgba(8, 15, 22, 0.65);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 14px;
+
+            padding: 18px;
+
+            margin-bottom: 22px;
+        }
+
+        .reason-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: var(--primary);
+
+            font-size: 0.85rem;
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+        .reason-title i {
+            font-size: 0.85rem;
+        }
+
+        .reason-box p {
+            margin: 0;
+
+            color: var(--text-dim);
+
+            font-size: 0.78rem;
+            line-height: 1.65;
+        }
+
+        .safety-list {
+            text-align: left;
+
+            margin: 0 0 25px;
+            padding: 0;
+
+            list-style: none;
+        }
+
+        .safety-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            margin-bottom: 12px;
+
+            color: #dbe4ec;
+
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .safety-list i {
+            color: var(--success);
+            margin-top: 3px;
+        }
+
+        .verify-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            background: rgba(245, 158, 11, 0.2);
+
+            color: #fff;
+
+            border: 1px solid rgba(245, 158, 11, 0.45);
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            font-size: 0.8rem;
+
+            transition: 0.2s ease;
+        }
+
+        .verify-btn:hover {
+            background: rgba(245, 158, 11, 0.35);
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 15px var(--primary-glow);
+        }
+
+        .verify-btn:active {
+            transform: translateY(1px);
+        }
+
+        .message {
+            margin-top: 15px;
+
+            color: var(--danger);
+
+            font-size: 0.75rem;
+        }
+
+        .privacy-note {
+            margin-top: 18px;
+
+            color: var(--text-dim);
+
+            font-size: 0.65rem;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+
+            .verification-console {
+                padding: 28px 22px;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>Identity Verification</h1>
+    <div class="verification-console">
 
-    <button id="verifyButton">
-        Verify My Identity
-    </button>
+        <div class="icon-ring">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
 
-    <p id="message"></p>
+        <div class="brand-name">
+            MarketView
+        </div>
+
+        <div class="brand-tagline">
+            Secure Marketplace
+        </div>
+
+        <h1>Identity Verification</h1>
+
+        <p class="intro">
+            Before you can participate in marketplace transactions,
+            we need to verify your identity.
+        </p>
+
+        <div class="reason-box">
+
+            <div class="reason-title">
+                <i class="fa-solid fa-handshake"></i>
+                Why do we verify your identity?
+            </div>
+
+            <p>
+                MarketView is designed to allow users to exchange goods
+                through transactions supported by an applied escrow process.
+                Because some transactions may involve users meeting to
+                exchange goods, we need to establish the identity of the
+                people participating in the marketplace.
+            </p>
+
+        </div>
+
+        <ul class="safety-list">
+
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Helps ensure that marketplace participants are genuine
+                    and identifiable.
+                </span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Helps create a safer environment when buyers and sellers
+                    arrange physical meet-ups.
+                </span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Supports trust during escrow-protected transactions
+                    involving the exchange of goods.
+                </span>
+            </li>
+
+        </ul>
+
+        <button id="verifyButton" class="verify-btn">
+            <i class="fa-solid fa-id-card"></i>
+            &nbsp;
+            Verify My Identity
+        </button>
+
+        <p id="message" class="message"></p>
+
+        <p class="privacy-note">
+            Your identity verification is used to support marketplace
+            safety and transaction integrity.
+        </p>
+
+    </div>
+
 
     <script type="module">
 
-        import {IdVerificationSessionId} from "../Backend/KYCconnection.js"
+        import { IdVerificationSessionId }from "../Backend/KYCconnection.js";
+        import {RetrieveUserDetails} from "../Cloud/Functions/RetrieveUserDetails.js"
 
         document
-            .getElementById("VerifyButton")
+            .getElementById("verifyButton")
             .addEventListener("click", async () => {
+
+                const button = document.getElementById("verifyButton");
+                const message = document.getElementById("message");
 
                 try {
 
+                    button.disabled = true;
+                    button.textContent = "Starting Verification...";
+
                     const data = await IdVerificationSessionId();
-                    if(data?.status=='succesful'){
-                        window.location.href = data.Url;
+
+                    const user=await RetrieveUserDetails()
+
+                    console.log("KYC session:", data);
+
+                    if (data?.status === "successful") {
+
+                        window.open(data.Url, "_blank");
+                        if(user[0].UserType==='Buyer'){
+                            window.location.href="../Pages/UI/buyer-dashboard.html"
+                        }
+                        if(user[0].UserType==='Seller'){
+                            window.location.href="../Pages/UI/seller-dashboard.html"
+                        }
+                        return ;
                     }
-                    if(data?.status=='error'){
-                        alert("Failed to start a session ")
+
+                    if (data?.status === "error") {
+
+                        message.textContent =
+                            "We could not start your identity verification. Please try again.";
+
+                        button.disabled = false;
+                        button.textContent = "Verify My Identity";
+
+                        return;
                     }
-                    
 
                 } catch (error) {
 
                     console.error(error);
 
-                    document.getElementById("message")
-                        .textContent = error.message;
+                    message.textContent =
+                        error?.message ||
+                        "Something went wrong while starting identity verification.";
+
+                    button.disabled = false;
+                    button.textContent = "Verify My Identity";
                 }
 
             });

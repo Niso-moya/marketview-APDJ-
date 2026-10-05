@@ -491,6 +491,24 @@
                     >
 
                 </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-users"></i>
+                    <select
+                    id="UserType"
+                    class="form-control"
+                    required
+                >
+                <option value="" disabled selected>
+                    Select Account Type
+                </option>
+                <option value="Buyer">
+                    Buyer
+                </option>
+                <option value="Seller">
+                    Seller
+                </option>
+            </select>
+        </div>
 
 
                 <button
@@ -558,9 +576,10 @@
 
                 const username =
                     document.getElementById("Username").value.trim();
-
-
-                if (!name || !surname || !username) {
+                const userType =
+                document.getElementById("UserType").value;
+                
+                if (!name || !surname || !username||!userType) {
                     return;
                 }
 
@@ -578,12 +597,12 @@
 
 
                 try {
-
                     const adduserdetails =
                         await AddUserDetails(
                             name,
                             surname,
-                            username
+                            username,
+                            userType
                         );
 
 
