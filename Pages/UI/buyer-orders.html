@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purchases | MarketView Buyer Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.8);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #FFFFFF;
+            --text-dim: #94a3b8;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-main);
+            background: linear-gradient(rgba(10, 25, 30, 0.75), rgba(5, 12, 18, 0.9)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(13, 22, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden; background: rgba(8, 15, 22, 0.95);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; color: #fff; }
+        .subtitle { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 25px; }
+
+        .order-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .order-item {
+            background: rgba(8, 15, 22, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-details h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+        .order-meta { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; }
+        .order-meta span { color: var(--primary); font-family: 'Roboto Mono', monospace; font-weight: 700; }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .empty-state { text-align: center; color: var(--text-dim); padding: 40px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <div class="logo-ring">
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <span class="brand-title">MarketView [Buyer]</span>
+        </div>
+        <div class="nav-links">
+            <a href="buyer-dashboard.html">Marketplace</a>
+            <a href="buyer-orders.html" class="active">My Purchases</a>
+            <a href="messages.html">Messages</a>
+            <a href="index.html" style="color: var(--danger);">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Placed Purchase Orders</h1>
+            <p class="subtitle">Monitor the fulfillment status of items you have acquired through the marketplace terminal.</p>
+            
+            <div class="order-list" id="placedOrdersList">
+                <div class="empty-state">Loading your purchase records...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { RetrievePlacedOrder } from './RetrievePlacedOrder.js';
+        import { RetrieveUserDetails } from './RetrieveUserDetails.js';
+
+        async function initUserProfile() {
+            try {
+                const details = await RetrieveUserDetails();
+                if (details && details.length > 0) {
+                    const user = details[0];
+                    const brandTitle = document.querySelector('.brand-title');
+                    if (brandTitle) {
+                        brandTitle.textContent = `MarketView [Buyer: ${user.name || user.username || 'Terminal'}]`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading user profile:", err);
+            }
+        }
+        initUserProfile();
+
+        async function loadPlacedOrders() {
+            try {
+                const orders = await RetrievePlacedOrder();
+                const listContainer = document.getElementById('placedOrdersList');
+                listContainer.innerHTML = '';
+
+                if (!orders || orders.length === 0) {
+                    listContainer.innerHTML = '<div class="empty-state">You have not placed any orders yet. Visit the Marketplace to begin trading.</div>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const item = document.createElement('div');
+                    item.className = 'order-item';
+                    item.innerHTML = `
+                        <div class="order-details">
+                          <h3>Order Reference ID: #${order.id || order.orderid || 'N/A'}</h3>
+                         <div class="order-meta">
+                                <i class="fa-solid fa-location-dot"></i> Shipping Destination: ${order.address || ''}, ${order.city || ''}, ${order.country || ''}<br>
+                                Date Logged: ${order.created_at ? new Date(order.created_at).toLocaleDateString() : 'Recent'}
+                            </div>
+                        </div>
+                        <div class="status-badge">${order.status || 'Active / Processing'}</div>
+                    `;
+                    listContainer.appendChild(item);
+                });
+            } catch (err) {
+                console.error("Error loading placed orders:", err);
+                document.getElementById('placedOrdersList').innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load purchase records.</div>';
+            }
+        }
+        loadPlacedOrders();
+    </script>
+</body>
+</html>

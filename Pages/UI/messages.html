@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | MarketView Communication Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.8);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #FFFFFF;
+            --text-dim: #94a3b8;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-main);
+            background: linear-gradient(rgba(10, 25, 30, 0.75), rgba(5, 12, 18, 0.9)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(13, 22, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden; background: rgba(8, 15, 22, 0.95);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .message-list::-webkit-scrollbar { display: none; }
+
+        .message-item {
+            background: rgba(8, 15, 22, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .message-meta { font-size: 0.7rem; color: var(--text-dim); display: flex; justify-content: space-between; }
+        .message-meta span { color: var(--primary); font-family: 'Roboto Mono', monospace; }
+        .message-content { font-size: 0.85rem; color: #fff; line-height: 1.4; }
+
+        .form-group { margin-bottom: 14px; text-align: left; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; font-weight: 600; }
+        .form-control {
+            width: 100%; padding: 11px 14px;
+            background: rgba(8, 15, 22, 0.85);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; color: #fff; font-size: 0.8rem;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fff;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: none;
+        }
+
+        .status-message {
+            margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 0.75rem;
+            display: none; text-align: center;
+        }
+        .status-message.success { background: rgba(52, 211, 153, 0.2); color: #fff; border: 1px solid var(--success); }
+        .status-message.error { background: rgba(248, 113, 113, 0.2); color: #fff; border: 1px solid var(--danger); }
+        .empty-state { text-align: center; color: var(--text-dim); padding: 25px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <div class="logo-ring">
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <span class="brand-title">MarketView [Communication]</span>
+        </div>
+        <div class="nav-links">
+            <a href="buyer-dashboard.html">Buyer Market</a>
+            <a href="buyer-orders.html">My Purchases</a>
+            <a href="seller-dashboard.html">Seller Studio</a>
+            <a href="seller-orders.html">Incoming Requests</a>
+            <a href="messages.html" class="active">Messages</a>
+            <a href="index.html" style="color: var(--danger);">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+            <h2><i class="fa-solid fa-inbox"></i> Communication Inbox</h2>
+            <div class="message-list" id="messageList">
+                <div class="empty-state">Loading message stream...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-paper-plane"></i> Transmit Direct Message</h2>
+            <form id="sendMessageForm">
+                <div class="form-group">
+                    <label>Recipient User UUID</label>
+                    <input type="text" id="recipientId" class="form-control" required placeholder="Enter destination user ID">
+                </div>
+                <div class="form-group">
+                    <label>Message Content</label>
+                    <textarea id="messageContent" class="form-control" rows="3" required placeholder="Type your negotiation or inquiry..."></textarea>
+                </div>
+                <button type="submit" class="btn" id="sendBtn">Transmit Message</button>
+            </form>
+            <div id="formStatus" class="status-message"></div>
+        </div>
+
+    </div>
+
+    <script type="module">
+		//Grabs your message inbox history from the database.
+        import { RetrieveMessages } from './RetrieveMessages.js';
+		//Sends a new message to another user.
+        import { SendMessage } from './SendMessage.js';
+
+		// Load messages on startup
+        const messageList = document.getElementById('messageList');
+		//Grabs the HTML form used for typing and sending a message.
+        const sendMessageForm = document.getElementById('sendMessageForm');
+		//Grabs the status banner element used to show success or error messages.
+        const formStatus = document.getElementById('formStatus');
+
+        // Load messages on startup
+        async function loadMessages() {
+            try {
+                const messages = await RetrieveMessages();
+                messageList.innerHTML = '';
+
+                if (!messages || messages.length === 0) {
+                    messageList.innerHTML = '<div class="empty-state">No active messages in your inbox.</div>';
+                    return;
+                }
+
+                messages.forEach(msg => {
+                    const item = document.createElement('div');
+                    item.className = 'message-item';
+                    item.innerHTML = `
+                        <div class="message-meta">
+                            <span>Sender: <span>${msg.senderid || msg.sendinguser || 'Peer'}</span></span>
+                            <span>${msg.created_at ? new Date(msg.created_at).toLocaleString() : ''}</span>
+                        </div>
+                        <div class="message-content">${msg.message || msg.content || ''}</div>
+                    `;
+                    messageList.appendChild(item);
+                });
+            } catch (err) {
+                console.error("Error loading inbox messages:", err);
+                messageList.innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load messages.</div>';
+            }
+        }
+        loadMessages();
+
+		// Load messages on startup
+		// Calls SendMessage(). If successful, shows success status and reloads messages; if failed, shows error banner.
+        sendMessageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('sendBtn');
+            const recipient = document.getElementById('recipientId').value.trim();
+            const content = document.getElementById('messageContent').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitting...';
+            formStatus.style.display = 'none';
+
+            try {
+                const result = await SendMessage(recipient, content);
+
+                if (result) {
+                    formStatus.style.display = 'block';
+                    formStatus.className = 'status-message success';
+                    formStatus.textContent = 'Message successfully transmitted!';
+                    sendMessageForm.reset();
+                    loadMessages();
+                } else {
+                    throw new Error('Transmission response empty.');
+                }
+            } catch (err) {
+                formStatus.style.display = 'block';
+                formStatus.className = 'status-message error';
+                formStatus.textContent = 'Transmission failed. Verify recipient UUID.';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Transmit Message';
+            }
+        });
+    </script>
+</body>
+</html>

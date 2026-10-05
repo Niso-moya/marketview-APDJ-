@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incoming Requests | MarketView Seller Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.8);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #FFFFFF;
+            --text-dim: #94a3b8;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-main);
+            background: linear-gradient(rgba(10, 25, 30, 0.75), rgba(5, 12, 18, 0.9)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(13, 22, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden; background: rgba(8, 15, 22, 0.95);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; color: #fff; }
+        .subtitle { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 25px; }
+
+        .order-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .order-item {
+            background: rgba(8, 15, 22, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-details h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+        .order-meta { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; }
+        .order-meta span { color: var(--primary); font-family: 'Roboto Mono', monospace; font-weight: 700; }
+
+        .order-actions { display: flex; gap: 8px; align-items: center; }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: none;
+        }
+        .btn-accept { background: rgba(52, 211, 153, 0.25); color: #34d399; border: 1px solid var(--success); }
+        .btn-decline { background: rgba(248, 113, 113, 0.25); color: #f87171; border: 1px solid var(--danger); }
+        .btn-finish { background: rgba(56, 189, 248, 0.25); color: #38bdf8; border: 1px solid #38bdf8; }
+
+        .empty-state { text-align: center; color: var(--text-dim); padding: 40px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <div class="logo-ring">
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <span class="brand-title">MarketView [Seller Dashboard]</span>
+        </div>
+        <div class="nav-links">
+            <a href="seller-dashboard.html">Inventory & Listings</a>
+            <a href="seller-orders.html" class="active">Incoming Requests</a>
+            <a href="messages.html">Messages</a>
+            <a href="index.html" style="color: var(--danger);">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Incoming Buyer Requests</h1>
+            <p class="subtitle">Review and manage customer orders placed against your active inventory.</p>
+            
+            <div class="order-list" id="requestsList">
+                <div class="empty-state">Loading incoming requests...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { RetrieveUserOrderRequests } from './RetrieveUserOrderRequests.js';
+        import { AcceptOrder } from './AcceptOrder.js';
+        import { DeclineOrder } from './DeclineOrder.js';
+        import { FinishOrder } from './FinishOrder.js';
+        import { RetrieveUserDetails } from './RetrieveUserDetails.js';
+
+        async function initUserProfile() {
+            try {
+                const details = await RetrieveUserDetails();
+                if (details && details.length > 0) {
+                    const user = details[0];
+                    const brandTitle = document.querySelector('.brand-title');
+                    if (brandTitle) {
+                        brandTitle.textContent = `MarketView [Seller: ${user.name || user.username || 'Studio'}]`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading user profile:", err);
+            }
+        }
+        initUserProfile();
+
+        async function loadRequests() {
+            try {
+                const requests = await RetrieveUserOrderRequests();
+                const listContainer = document.getElementById('requestsList');
+                listContainer.innerHTML = '';
+
+                if (!requests || requests.length === 0) {
+                    listContainer.innerHTML = '<div class="empty-state">No pending customer requests found.</div>';
+                    return;
+                }
+
+                requests.forEach(req => {
+                    const orderId = req.id || req.orderid;
+                    const item = document.createElement('div');
+                    item.className = 'order-item';
+                    item.innerHTML = `
+                        <div class="order-details">
+                            <h3>Product Reference ID: #${req.productid || 'Item'}</h3>
+                            <div class="order-meta">
+                                <i class="fa-solid fa-truck"></i> Destination: ${req.address || ''}, ${req.city || ''}, ${req.country || ''}<br>
+                                Status: <span>${req.status || 'Active Request'}</span>
+                            </div>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-accept" onclick="processAccept('${orderId}')">Accept</button>
+                            <button class="btn btn-decline" onclick="processDecline('${orderId}')">Decline</button>
+                            <button class="btn btn-finish" onclick="processFinish('${orderId}')">Finish</button>
+                        </div>
+                    `;
+                    listContainer.appendChild(item);
+                });
+            } catch (err) {
+                console.error("Error loading incoming requests:", err);
+                document.getElementById('requestsList').innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load requests.</div>';
+            }
+        }
+        loadRequests();
+
+        window.processAccept = async function(id) {
+            try {
+                const res = await AcceptOrder(id);
+                if (res) { loadRequests(); }
+            } catch (err) {
+                console.error("Error accepting order:", err);
+            }
+        }
+
+        window.processDecline = async function(id) {
+            try {
+                const res = await DeclineOrder(id);
+                if (res) { loadRequests(); }
+            } catch (err) {
+                console.error("Error declining order:", err);
+            }
+        }
+
+        window.processFinish = async function(id) {
+            try {
+                const res = await FinishOrder(id);
+                if (res) { loadRequests(); }
+            } catch (err) {
+                console.error("Error finishing order:", err);
+            }
+        }
+    </script>
+</body>
+</html>

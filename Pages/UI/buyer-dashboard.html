@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | MarketView Buyer Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.8);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #FFFFFF;
+            --text-dim: #94a3b8;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-main);
+            background: linear-gradient(rgba(10, 25, 30, 0.75), rgba(5, 12, 18, 0.9)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(13, 22, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden; background: rgba(8, 15, 22, 0.95);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-bar i {
+            position: absolute; left: 16px; top: 15px;
+            color: var(--primary); font-size: 0.9rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .search-bar input:focus { border-color: var(--primary); box-shadow: 0 0 12px var(--primary-glow); }
+
+        h1 { font-size: 1.5rem; font-weight: 800; }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-img { width: 100%; height: 160px; object-fit: cover; background: #080f16; }
+        .product-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+        .product-name { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+        .product-price { font-family: 'Roboto Mono', monospace; font-size: 0.95rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+        .product-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px; flex: 1; line-height: 1.4; }
+
+        /* Solid border-matched button with NO hover transition */
+        .btn {
+            padding: 10px;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fff;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-align: center;
+            transition: none;
+        }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: #0d161e;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 450px;
+            max-width: 90%;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+        }
+        .modal h3 { margin-bottom: 15px; font-size: 1.2rem; color: var(--primary); }
+        .modal-close { position: absolute; right: 20px; top: 20px; color: var(--text-dim); cursor: pointer; font-size: 1.1rem; }
+        .modal-close:hover { color: #fff; }
+
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; font-weight: 600; }
+        .form-control {
+            width: 100%; padding: 10px 12px;
+            background: rgba(8, 15, 22, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; color: #fff; font-size: 0.8rem;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--primary); }
+
+        .seller-info {
+            background: rgba(255,255,255,0.03);
+            padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 0.8rem;
+        }
+
+        .status-banner { margin-top: 10px; font-size: 0.75rem; text-align: center; display: none; padding: 8px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <div class="logo-ring">
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <span class="brand-title">MarketView [Buyer]</span>
+        </div>
+        <div class="nav-links">
+            <a href="buyer-dashboard.html" class="active">Marketplace</a>
+            <a href="buyer-orders.html">My Purchases</a>
+            <a href="messages.html">Messages</a>
+            <a href="index.html" style="color: var(--danger);">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-section">
+            <h1>Buyer Marketplace</h1>
+            <div class="search-bar">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search available products...">
+            </div>
+        </div>
+
+        <div id="productGrid" class="product-grid">
+            <!-- Dynamically populated products -->
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <span class="modal-close" id="closeModal"><i class="fa-solid fa-xmark"></i></span>
+            <h3>Secure Order Checkout</h3>
+            <div class="seller-info" id="sellerInfoContainer">
+                Retrieving seller verification...
+            </div>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>Street Address</label>
+                    <input type="text" id="orderAddress" class="form-control" required placeholder="Street address">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="orderCity" class="form-control" required placeholder="City">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" id="orderCountry" class="form-control" required placeholder="Country">
+                </div>
+                <button type="submit" class="btn" style="width:100%; margin-top: 10px;" id="submitOrderBtn">Confirm & Place Order</button>
+            </form>
+            <div id="modalStatus" class="status-banner"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { RandomProducts } from './RandomProducts.js';
+        import { SearchProduct } from './SearchProduct.js';
+        import { RetrieveProductUserDetails } from './RetrieveProductUserDetails.js';
+        import { PlaceProductOrder } from './PlaceProductOrder.js';
+        import { RetrieveUserDetails } from './RetrieveUserDetails.js';
+
+        let selectedProductId = null;
+        const productGrid = document.getElementById('productGrid');
+        const searchInput = document.getElementById('searchInput');
+        const orderModal = document.getElementById('orderModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // Load buyer profile details in the navbar
+        async function initUserProfile() {
+            try {
+                const details = await RetrieveUserDetails();
+                if (details && details.length > 0) {
+                    const user = details[0];
+                    const brandTitle = document.querySelector('.brand-title');
+                    if (brandTitle) {
+                        brandTitle.textContent = `MarketView [Buyer: ${user.name || user.username || 'Terminal'}]`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading user profile:", err);
+            }
+        }
+        initUserProfile();
+
+        function renderProducts(productList) {
+            productGrid.innerHTML = '';
+            if (!productList || productList.length === 0) {
+                productGrid.innerHTML = '<p style="color: var(--text-dim); grid-column: span 100; text-align: center;">No products available.</p>';
+                return;
+            }
+
+            productList.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${prod.medialink || 'logo.jpg'}" class="product-img" alt="Product">
+                    <div class="product-body">
+                        <div class="product-name">${prod.productname || prod.name}</div>
+                        <div class="product-price">$${prod.productprice || prod.price}</div>
+                        <div class="product-desc">${prod.productdescription || prod.description || 'No description provided.'}</div>
+                        <button class="btn" onclick="openOrderModal('${prod.id || prod.productid}')">Purchase Item</button>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        async function loadMarketplace() {
+            try {
+                const data = await RandomProducts();
+                renderProducts(data);
+            } catch (err) {
+                console.error("Error loading marketplace products:", err);
+                productGrid.innerHTML = '<p style="color: var(--danger); text-align: center; grid-column: span 100;">Failed to load products.</p>';
+            }
+        }
+        loadMarketplace();
+
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                const query = e.target.value.trim();
+                if (query === '') {
+                    loadMarketplace();
+                } else {
+                    const results = await SearchProduct(query);
+                    renderProducts(results);
+                }
+            }, 350);
+        });
+
+        window.openOrderModal = async function(productId) {
+            selectedProductId = productId;
+            orderModal.style.display = 'flex';
+            document.getElementById('sellerInfoContainer').innerHTML = 'Retrieving seller profile...';
+            document.getElementById('modalStatus').style.display = 'none';
+
+            try {
+                const userDetails = await RetrieveProductUserDetails(productId);
+                if (userDetails && userDetails.length > 0) {
+                    const seller = userDetails[0];
+                    document.getElementById('sellerInfoContainer').innerHTML = `
+                        <strong>Verified Seller:</strong> ${seller.name || ''} ${seller.surname || ''} (@${seller.username || 'unknown'})
+                    `;
+                } else {
+                    document.getElementById('sellerInfoContainer').innerHTML = 'Seller verification unavailable.';
+                }
+            } catch (err) {
+                document.getElementById('sellerInfoContainer').innerHTML = 'Seller verification unavailable.';
+            }
+        }
+
+        closeModal.addEventListener('click', () => { orderModal.style.display = 'none'; });
+
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitOrderBtn');
+            const address = document.getElementById('orderAddress').value.trim();
+            const city = document.getElementById('orderCity').value.trim();
+            const country = document.getElementById('orderCountry').value.trim();
+            const statusBanner = document.getElementById('modalStatus');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Processing Order...';
+
+            try {
+                const response = await PlaceProductOrder(selectedProductId, address, city, country);
+                
+                statusBanner.style.display = 'block';
+                if (response) {
+                    statusBanner.style.background = 'rgba(52, 211, 153, 0.2)';
+                    statusBanner.style.color = '#34d399';
+                    statusBanner.textContent = 'Order placed successfully!';
+                    setTimeout(() => {
+                        orderModal.style.display = 'none';
+                        btn.disabled = false;
+                        btn.innerHTML = 'Confirm & Place Order';
+                        document.getElementById('orderForm').reset();
+                    }, 1500);
+                } else {
+                    throw new Error('Order submission returned empty response.');
+                }
+            } catch (err) {
+                statusBanner.style.display = 'block';
+                statusBanner.style.background = 'rgba(248, 113, 113, 0.2)';
+                statusBanner.style.color = '#f87171';
+                statusBanner.textContent = 'Failed to place order. Try again.';
+                btn.disabled = false;
+                btn.innerHTML = 'Confirm & Place Order';
+            }
+        });
+    </script>
+</body>
+</html>

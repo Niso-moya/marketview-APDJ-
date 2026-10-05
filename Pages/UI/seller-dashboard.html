@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Studio | MarketView Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --primary-glow: rgba(251, 191, 36, 0.3);
+            --glass: rgba(13, 22, 30, 0.8);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --text-main: #FFFFFF;
+            --text-dim: #94a3b8;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-main);
+            background: linear-gradient(rgba(10, 25, 30, 0.75), rgba(5, 12, 18, 0.9)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(13, 22, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-ring {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden; background: rgba(8, 15, 22, 0.95);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; font-weight: 600; }
+        .form-control {
+            width: 100%; padding: 12px 14px;
+            background: rgba(8, 15, 22, 0.85);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; color: #fff; font-size: 0.8rem;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+        .btn {
+            width: 100%;
+            padding: 13px;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fff;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: none;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: rgba(8, 15, 22, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-img { width: 100%; height: 150px; object-fit: cover; background: #080f16; }
+        .product-body { padding: 14px; display: flex; flex-direction: column; flex: 1; }
+        .product-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+        .product-price { font-family: 'Roboto Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+        .product-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 12px; flex: 1; line-height: 1.4; }
+        .product-location { font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; display: flex; align-items: center; gap: 6px; }
+
+        .status-message {
+            margin-top: 15px; padding: 10px; border-radius: 8px; font-size: 0.75rem;
+            display: none; text-align: center;
+        }
+        .status-message.success { background: rgba(52, 211, 153, 0.2); color: #fff; border: 1px solid var(--success); }
+        .status-message.error { background: rgba(248, 113, 113, 0.2); color: #fff; border: 1px solid var(--danger); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <div class="logo-ring">
+                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <span class="brand-title">MarketView [Seller Dashboard]</span>
+        </div>
+        <div class="nav-links">
+            <a href="seller-dashboard.html" class="active">Inventory & Listings</a>
+            <a href="seller-orders.html">Incoming Requests</a>
+            <a href="messages.html">Messages</a>
+            <a href="index.html" style="color: var(--danger);">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2><i class="fa-solid fa-circle-plus"></i> List New Product</h2>
+            <form id="addProductForm">
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>Product Name</label>
+                        <input type="text" id="prodName" class="form-control" required placeholder="e.g. Cargo Pants">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (Rands(R))</label>
+                        <input type="number" step="0.01" id="prodPrice" class="form-control" required placeholder="24.99">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image File</label>
+                        <input type="file" id="prodImage" class="form-control" accept="image/*" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="prodDesc" class="form-control" rows="3" required placeholder="Product specifications..."></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label>Street Address</label>
+                        <input type="text" id="prodAddress" class="form-control" required placeholder="32 Oribi road">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="prodCity" class="form-control" required placeholder="e.g Pietermaritzburg">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" id="prodCountry" class="form-control" required placeholder="e.g South Africa">
+                    </div>
+                </div>
+                <button type="submit" class="btn" id="submitBtn">Publish Product Listing</button>
+            </form>
+            <div id="formStatus" class="status-message"></div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-box-archive"></i> Your Active Inventory</h2>
+            <div id="myProductGrid" class="product-grid">
+               <!-- Dynamically loaded inventory items -->
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+		//
+        import { RetrieveUserProducts } from './RetrieveUserProducts.js';
+        import { AddProduct } from './AddProduct.js';
+        import { AddPic } from './AddPic.js';
+        import { RetrieveUserDetails } from './RetrieveUserDetails.js';
+
+        const myProductGrid = document.getElementById('myProductGrid');
+        const addProductForm = document.getElementById('addProductForm');
+        const formStatus = document.getElementById('formStatus');
+
+        // Load seller profile details in the navbar
+        async function initUserProfile() {
+            try {
+                const details = await RetrieveUserDetails();
+                if (details && details.length > 0) {
+                    const user = details[0];
+                    const brandTitle = document.querySelector('.brand-title');
+                    if (brandTitle) {
+                        brandTitle.textContent = `MarketView [Seller: ${user.name || user.username || 'Studio'}]`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading user profile:", err);
+            }
+        }
+        initUserProfile();
+
+        // Load user products on startup
+        async function loadUserProducts() {
+            try {
+                const products = await RetrieveUserProducts();
+                myProductGrid.innerHTML = '';
+
+                if (!products || products.length === 0) {
+                    myProductGrid.innerHTML = '<p style="color: var(--text-dim); grid-column: span 100; text-align: center; padding: 20px;">You have not listed any products yet.</p>';
+                    return;
+                }
+
+                products.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <img src="${prod.medialink || 'logo.jpg'}" class="product-img" alt="Item">
+                        <div class="product-body">
+                            <div class="product-name">${prod.productname || prod.name}</div>
+                            <div class="product-price">$${prod.productprice || prod.price}</div>
+                            <div class="product-desc">${prod.productdescription || prod.description || ''}</div>
+                            <div class="product-location"><i class="fa-solid fa-location-dot"></i> ${prod.city || ''}, ${prod.country || ''}</div>
+                        </div>
+                    `;
+                    myProductGrid.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Error loading user inventory:", err);
+                myProductGrid.innerHTML = '<p style="color: var(--danger); text-align: center; grid-column: span 100;">Failed to load inventory.</p>';
+            }
+        }
+        loadUserProducts();
+
+        // Handle Form Submission & Image Upload
+        addProductForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const name = document.getElementById('prodName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const desc = document.getElementById('prodDesc').value.trim();
+            const address = document.getElementById('prodAddress').value.trim();
+            const city = document.getElementById('prodCity').value.trim();
+            const country = document.getElementById('prodCountry').value.trim();
+            const fileInput = document.getElementById('prodImage');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading media...';
+            formStatus.style.display = 'none';
+
+            try {
+                let mediaLink = '';
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileName = `product_${Date.now()}_${file.name}`;
+                    mediaLink = await AddPic('product-images', file, fileName);
+                }
+
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing listing...';
+                const result = await AddProduct(name, price, desc, address, city, mediaLink || '', country);
+
+                if (result) {
+                    formStatus.style.display = 'block';
+                    formStatus.className = 'status-message success';
+                    formStatus.textContent = 'Product successfully published!';
+                    addProductForm.reset();
+                    loadUserProducts();
+                } else {
+                    throw new Error("Failed to register product record.");
+                }
+            } catch (err) {
+                formStatus.style.display = 'block';
+                formStatus.className = 'status-message error';
+                formStatus.textContent = err.message || 'Error publishing product.';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Publish Product Listing';
+            }
+        });
+    </script>
+</body>
+</html>
