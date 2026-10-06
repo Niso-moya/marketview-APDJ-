@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Incoming Requests | MarketView Seller Studio</title>
+    <title>List Product | MarketView Seller Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,13 +14,11 @@
             --primary-hover: #f59e0b;
             --primary-glow: rgba(251, 191, 36, 0.25);
             --glass: rgba(13, 22, 30, 0.78);
-            --glass-card: rgba(18, 29, 40, 0.88);
             --glass-border: rgba(245, 158, 11, 0.25);
             --text-main: #FFFFFF;
             --text-dim: #94a3b8;
             --danger: #f87171;
             --success: #34d399;
-            --info: #38bdf8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
@@ -124,7 +122,7 @@
 
         /* --- CONTAINER & CARD --- */
         .container {
-            max-width: 960px;
+            max-width: 800px;
             margin: 40px auto;
             padding: 0 24px;
         }
@@ -147,9 +145,9 @@
             padding-bottom: 20px;
         }
 
-        h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        h1 i { color: var(--primary); }
-        
+        h2 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        h2 i { color: var(--primary); }
+
         .verified-intro {
             font-size: 0.75rem;
             color: var(--text-dim);
@@ -161,52 +159,62 @@
         }
         .verified-intro i { color: var(--success); font-size: 0.7rem; }
 
-        /* --- ORDER LIST & ITEMS --- */
-        .order-list { display: flex; flex-direction: column; gap: 16px; }
-
-        .order-item {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        .order-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.1);
+        /* --- FORMS --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        .order-details h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: #fff; font-family: 'Roboto Mono', monospace; }
-        .order-meta { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-        .order-meta i { color: var(--primary); margin-right: 5px; }
-        .order-meta span { color: var(--primary); font-family: 'Roboto Mono', monospace; font-weight: 700; }
+        .form-group { margin-bottom: 16px; text-align: left; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .order-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(6, 11, 16, 0.95);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        input[type="file"].form-control {
+            padding: 9px 12px;
+            cursor: pointer;
+        }
 
         .btn {
-            padding: 9px 16px;
-            border-radius: 9px;
-            font-weight: 700;
-            font-size: 0.75rem;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #091118;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.8rem;
             text-transform: uppercase;
             cursor: pointer;
-            border: none;
+            box-shadow: 0 4px 12px var(--primary-glow);
             transition: opacity 0.2s ease, transform 0.1s ease;
+            margin-top: 10px;
         }
-        .btn:hover { opacity: 0.85; }
-        .btn:active { transform: scale(0.97); }
+        .btn:hover { opacity: 0.9; }
+        .btn:active { transform: scale(0.98); }
 
-        .btn-accept { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
-        .btn-decline { background: rgba(248, 113, 113, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.4); }
-        .btn-finish { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
-
-        .empty-state { text-align: center; color: var(--text-dim); padding: 50px; font-size: 0.85rem; }
+        .status-message {
+            margin-top: 15px; padding: 12px; border-radius: 10px; font-size: 0.8rem;
+            display: none; text-align: center; font-weight: 600;
+        }
+        .status-message.success { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        .status-message.error { background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
     </style>
 </head>
 <body>
@@ -220,8 +228,8 @@
         </div>
         <div class="nav-links">
             <a href="seller-inventory.html" data-tooltip="View and manage active stock listings published on the marketplace network"><i class="fa-solid fa-boxes-stacked"></i> Inventory</a>
-            <a href="seller-list-product.html" data-tooltip="Publish new product inventory items with media attachments and specifications"><i class="fa-solid fa-circle-plus"></i> List Product</a>
-            <a href="seller-orders.html" class="active" data-tooltip="Review, accept, decline, or fulfill incoming customer purchase requests"><i class="fa-solid fa-receipt"></i> Incoming Requests</a>
+            <a href="seller-list-product.html" class="active" data-tooltip="Publish new product inventory items with media attachments and specifications"><i class="fa-solid fa-circle-plus"></i> List Product</a>
+            <a href="seller-orders.html" data-tooltip="Review, accept, decline, or fulfill incoming customer purchase requests"><i class="fa-solid fa-receipt"></i> Incoming Requests</a>
             <a href="seller-messages.html" data-tooltip="Communicate directly with clients regarding product inquiries and orders"><i class="fa-solid fa-comments"></i> Messages</a>
             <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active studio session and log out"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
         </div>
@@ -230,24 +238,55 @@
     <div class="container">
         <div class="card">
             <div class="header-section">
-                <h1><i class="fa-solid fa-clipboard-list"></i> Incoming Buyer Requests</h1>
+                <h2><i class="fa-solid fa-circle-plus"></i> List New Product</h2>
                 <div class="verified-intro">
-                    <i class="fa-solid fa-shield-check"></i> Review, accept, decline, or fulfill customer purchase orders placed against your active inventory.
+                    <i class="fa-solid fa-bolt"></i> Publish new inventory items instantly with media attachments and location specifications.
                 </div>
             </div>
-            
-            <div class="order-list" id="requestsList">
-                <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading incoming requests...</div>
-            </div>
+            <form id="addProductForm">
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>Product Name</label>
+                        <input type="text" id="prodName" class="form-control" required placeholder="e.g. Cargo Pants">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (ZAR / Rands)</label>
+                        <input type="number" step="0.01" id="prodPrice" class="form-control" required placeholder="249.99">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image File</label>
+                        <input type="file" id="prodImage" class="form-control" accept="image/*" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="prodDesc" class="form-control" rows="3" required placeholder="Product specifications and details..."></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label>Street Address</label>
+                        <input type="text" id="prodAddress" class="form-control" required placeholder="e.g. 32 Oribi Road">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="prodCity" class="form-control" required placeholder="e.g. Pietermaritzburg">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" id="prodCountry" class="form-control" required placeholder="e.g. South Africa">
+                    </div>
+                </div>
+                <button type="submit" class="btn" id="submitBtn">Publish Product Listing</button>
+            </form>
+            <div id="formStatus" class="status-message"></div>
         </div>
     </div>
 
     <script type="module">
-        import { RetrieveUserOrderRequests } from '../../Cloud/Functions/RetrieveUserOrderRequests.js';
-        import { AcceptOrder } from '../../Cloud/Functions/AcceptOrder.js';
-        import { DeclineOrder } from '../../Cloud/Functions/DeclineOrder.js';
-        import { FinishOrder } from '../../Cloud/Functions/FinishOrder.js';
+        import { AddProduct } from '../../Cloud/Functions/AddProduct.js';
+        import { AddPic } from '../../Cloud/Functions/AddPic.js';
         import { RetrieveUserDetails } from '../../Cloud/Functions/RetrieveUserDetails.js';
+
+        const addProductForm = document.getElementById('addProductForm');
+        const formStatus = document.getElementById('formStatus');
 
         async function initUserProfile() {
             try {
@@ -265,76 +304,51 @@
         }
         initUserProfile();
 
-        async function loadRequests() {
-            try {
-                const requests = await RetrieveUserOrderRequests();
-                const listContainer = document.getElementById('requestsList');
-                listContainer.innerHTML = '';
+        addProductForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const name = document.getElementById('prodName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const desc = document.getElementById('prodDesc').value.trim();
+            const address = document.getElementById('prodAddress').value.trim();
+            const city = document.getElementById('prodCity').value.trim();
+            const country = document.getElementById('prodCountry').value.trim();
+            const fileInput = document.getElementById('prodImage');
 
-                if (!requests || requests.length === 0) {
-                    listContainer.innerHTML = '<div class="empty-state">No pending customer requests found.</div>';
-                    return;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading media...';
+            formStatus.style.display = 'none';
+
+            try {
+                let mediaLink = '';
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileName = `product_${Date.now()}_${file.name}`;
+                    mediaLink = await AddPic('Products', file, fileName);
                 }
 
-                requests.forEach(req => {
-                    const orderId = req.Orderid || req.orderid;
-                    const item = document.createElement('div');
-                    item.className = 'order-item';
-                    item.innerHTML = `
-                        <div class="order-details">
-                            <h3>Product Ref: #${req.productid || 'Item'}</h3>
-                            <div class="order-meta">
-                                <i class="fa-solid fa-truck"></i> Destination: ${req.Address || ''}, ${req.City || ''}, ${req.Country || ''}<br>
-                                <i class="fa-solid fa-info-circle"></i> Status: <span>${req.status || 'Active Request'}</span>
-                            </div>
-                        </div>
-                        <div class="order-actions">
-                            <button class="btn btn-accept" onclick="processAccept('${orderId}')">Accept</button>
-                            <button class="btn btn-decline" onclick="processDecline('${orderId}')">Decline</button>
-                            <button class="btn btn-finish" onclick="processFinish('${orderId}')">Finish</button>
-                        </div>
-                    `;
-                    listContainer.appendChild(item);
-                });
-            } catch (err) {
-                console.error("Error loading incoming requests:", err);
-                document.getElementById('requestsList').innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load requests.</div>';
-            }
-        }
-        loadRequests();
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing listing...';
+                const result = await AddProduct(name, price, desc, address, city, mediaLink || '', country);
 
-        window.processAccept = async function(id) {
-            try {
-                const res = await AcceptOrder(id);
-                if (res) {
-                    loadRequests();
+                if (result) {
+                    formStatus.style.display = 'block';
+                    formStatus.className = 'status-message success';
+                    formStatus.textContent = 'Product successfully published! Redirecting to inventory...';
+                    addProductForm.reset();
+                    setTimeout(() => {
+                        window.location.href = 'seller-inventory.html';
+                    }, 1500);
+                } else {
+                    throw new Error("Failed to register product record.");
                 }
             } catch (err) {
-                console.error("Error accepting order:", err);
+                formStatus.style.display = 'block';
+                formStatus.className = 'status-message error';
+                formStatus.textContent = err.message || 'Error publishing product.';
+                btn.disabled = false;
+                btn.innerHTML = 'Publish Product Listing';
             }
-        }
-
-        window.processDecline = async function(id) {
-            try {
-                const res = await DeclineOrder(id);
-                if (res) {
-                    loadRequests();
-                }
-            } catch (err) {
-                console.error("Error declining order:", err);
-            }
-        }
-
-        window.processFinish = async function(id) {
-            try {
-                const res = await FinishOrder(id);
-                if (res) {
-                    loadRequests();
-                }
-            } catch (err) {
-                console.error("Error finishing order:", err);
-            }
-        }
+        });
     </script>
 </body>
 </html>

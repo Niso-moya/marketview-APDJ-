@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Purchases | MarketView Buyer Terminal</title>
+    <title>Inventory | MarketView Seller Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -62,7 +62,7 @@
         .brand-title { font-size: 1.15rem; font-weight: 800; letter-spacing: 1.5px; color: var(--text-main); text-transform: uppercase; }
         .brand-title span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; }
+        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; flex-wrap: wrap; }
         .nav-links a {
             color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
             transition: color 0.2s ease;
@@ -121,11 +121,14 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* --- CONTAINER & CARD --- */
+        /* --- CONTAINER & CARDS --- */
         .container {
-            max-width: 960px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .card {
@@ -133,21 +136,24 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 22px;
-            padding: 35px;
+            padding: 30px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.7);
         }
 
         .header-section {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 25px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 20px;
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        
+        .header-title-group h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .header-title-group h2 i { color: var(--primary); }
+
         .verified-intro {
             font-size: 0.75rem;
             color: var(--text-dim);
@@ -159,44 +165,51 @@
         }
         .verified-intro i { color: var(--success); font-size: 0.7rem; }
 
-        /* --- ORDER LIST & ITEMS --- */
-        .order-list { display: flex; flex-direction: column; gap: 16px; }
+        .btn-action {
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #091118;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            transition: opacity 0.2s ease;
+        }
+        .btn-action:hover { opacity: 0.9; }
 
-        .order-item {
+        /* --- PRODUCT GRID --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .product-card {
             background: var(--glass-card);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 22px;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            flex-direction: column;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
         }
-        .order-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.1);
-        }
+        .product-card:hover { transform: translateY(-3px); }
 
-        .order-details h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: #fff; font-family: 'Roboto Mono', monospace; }
-        .order-meta { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-        .order-meta i { color: var(--primary); margin-right: 5px; }
-
-        .status-badge {
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--primary);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            letter-spacing: 0.5px;
-        }
-
-        .empty-state { text-align: center; color: var(--text-dim); padding: 50px; font-size: 0.85rem; }
+        .product-img { width: 100%; height: 160px; object-fit: cover; background: #050b10; }
+        .product-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+        .product-name { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+        .product-price { font-family: 'Roboto Mono', monospace; font-size: 0.95rem; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+        .product-desc { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 14px; flex: 1; line-height: 1.5; }
+        .product-location { font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; display: flex; align-items: center; gap: 6px; }
+        .product-location i { color: var(--primary); }
     </style>
 </head>
 <body>
@@ -206,34 +219,39 @@
             <div class="logo-ring">
                 <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
             </div>
-            <span class="brand-title">MarketView <span>[Buyer Terminal]</span></span>
+            <span class="brand-title">MarketView <span>[Seller Studio]</span></span>
         </div>
         <div class="nav-links">
-            <a href="buyer-dashboard.html" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> Marketplace</a>
-            <a href="buyer-orders.html" class="active" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-box"></i> My Purchases</a>
-            <a href="buyer-messages.html" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> Messages</a>
-            <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active session and log out of the terminal"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            <a href="seller-inventory.html" class="active" data-tooltip="View and manage active stock listings published on the marketplace network"><i class="fa-solid fa-boxes-stacked"></i> Inventory</a>
+            <a href="seller-list-product.html" data-tooltip="Publish new product inventory items with media attachments and specifications"><i class="fa-solid fa-circle-plus"></i> List Product</a>
+            <a href="seller-orders.html" data-tooltip="Review, accept, decline, or fulfill incoming customer purchase requests"><i class="fa-solid fa-receipt"></i> Incoming Requests</a>
+            <a href="seller-messages.html" data-tooltip="Communicate directly with clients regarding product inquiries and orders"><i class="fa-solid fa-comments"></i> Messages</a>
+            <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active studio session and log out"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="card">
             <div class="header-section">
-                <h1>Placed Purchase Orders</h1>
-                <div class="verified-intro">
-                    <i class="fa-solid fa-shield-check"></i> Monitor fulfillment status and track verified acquisitions across the marketplace.
+                <div class="header-title-group">
+                    <h2><i class="fa-solid fa-box-archive"></i> Active Inventory</h2>
+                    <div class="verified-intro">
+                        <i class="fa-solid fa-shield-check"></i> Manage and view all live stock listings currently published on the marketplace.
+                    </div>
                 </div>
+                <a href="seller-list-product.html" class="btn-action"><i class="fa-solid fa-plus"></i> List New Item</a>
             </div>
-            
-            <div class="order-list" id="placedOrdersList">
-                <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading your purchase records...</div>
+            <div id="myProductGrid" class="product-grid">
+                <!-- Dynamically loaded inventory items -->
             </div>
         </div>
     </div>
 
     <script type="module">
-        import { RetrievePlacedOrder } from '../../Cloud/Functions/RetrievePlacedOrder.js';
+        import { RetrieveUserProducts } from '../../Cloud/Functions/RetrieveUserProducts.js';
         import { RetrieveUserDetails } from '../../Cloud/Functions/RetrieveUserDetails.js';
+
+        const myProductGrid = document.getElementById('myProductGrid');
 
         async function initUserProfile() {
             try {
@@ -242,7 +260,7 @@
                     const user = details[0];
                     const brandTitle = document.querySelector('.brand-title');
                     if (brandTitle) {
-                        brandTitle.innerHTML = `MarketView <span>[Buyer: ${user.name || user.username || 'Terminal'}]</span>`;
+                        brandTitle.innerHTML = `MarketView <span>[Seller: ${user.name || user.username || 'Studio'}]</span>`;
                     }
                 }
             } catch (err) {
@@ -251,38 +269,35 @@
         }
         initUserProfile();
 
-        async function loadPlacedOrders() {
+        async function loadUserProducts() {
             try {
-                const orders = await RetrievePlacedOrder();
-                const listContainer = document.getElementById('placedOrdersList');
-                listContainer.innerHTML = '';
-
-                if (!orders || orders.length === 0) {
-                    listContainer.innerHTML = '<div class="empty-state">You have not placed any orders yet. Visit the Marketplace to begin trading.</div>';
+                const products = await RetrieveUserProducts();
+                myProductGrid.innerHTML = '';
+                if (!products || products.length === 0) {
+                    myProductGrid.innerHTML = '<p style="color: var(--text-dim); grid-column: span 100; text-align: center; padding: 40px;">Your inventory is empty. Click "List New Item" above to add products.</p>';
                     return;
                 }
 
-                orders.forEach(order => {
-                    const item = document.createElement('div');
-                    item.className = 'order-item';
-                    item.innerHTML = `
-                        <div class="order-details">
-                            <h3>Order Ref: #${order.Orderid || order.orderid || 'N/A'}</h3>
-                            <div class="order-meta">
-                                <i class="fa-solid fa-location-dot"></i> Shipping Destination: ${order.Address || ''}, ${order.city || ''}, ${order.country || ''}<br>
-                                <i class="fa-regular fa-calendar"></i> Date Logged: ${order.created_at ? new Date(order.created_at).toLocaleDateString() : 'Recent'}
-                            </div>
+                products.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <img src="${prod.MediaLink || 'logo.jpg'}" class="product-img" alt="Item">
+                        <div class="product-body">
+                            <div class="product-name">${prod.ProductName || prod.name}</div>
+                            <div class="product-price">R${prod.ProductPrice || prod.price}</div>
+                            <div class="product-desc">${prod.ProductDescription || prod.description || ''}</div>
+                            <div class="product-location"><i class="fa-solid fa-location-dot"></i> ${prod.City || ''}, ${prod.Country || ''}</div>
                         </div>
-                        <div class="status-badge">${order.Status || 'Active / Processing'}</div>
                     `;
-                    listContainer.appendChild(item);
+                    myProductGrid.appendChild(card);
                 });
             } catch (err) {
-                console.error("Error loading placed orders:", err);
-                document.getElementById('placedOrdersList').innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load purchase records.</div>';
+                console.error("Error loading user inventory:", err);
+                myProductGrid.innerHTML = '<p style="color: var(--danger); text-align: center; grid-column: span 100;">Failed to load inventory.</p>';
             }
         }
-        loadPlacedOrders();
+        loadUserProducts();
     </script>
 </body>
 </html>
