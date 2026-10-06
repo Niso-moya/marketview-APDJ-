@@ -1,6 +1,6 @@
 import { supabase } from "../Authentication/AuthConnection.js";
 
-export async function RetrieveUserPlacedOrders() {
+export async function RetrievePlacedOrder() {
     try {
         const{data:userdata,error:usererror}=await supabase.auth.getUser()
         const user=userdata.user

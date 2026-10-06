@@ -260,7 +260,12 @@
         if (data && data.length > 0) {
 
             if (data[0].Verified === true) {
-                window.location.href = "Dashboard.html";
+                if(data[0].UserType==='Buyer'){
+                    window.location.href="/Pages/UI/buyer-dashboard.html"
+                }
+                if(data[0].UserType==='Seller'){
+                    window.location.href="/Pages/UI/seller-dashboard.html"
+                }
                 return;
             }
 
@@ -271,7 +276,7 @@
 
         } else {
 
-            window.location.href = "AddUserDetail.html";
+            window.location.href = "AddUserDetails.html";
             return;
         }
     }
@@ -304,7 +309,12 @@ document.getElementById("login-form").addEventListener("submit", async (event) =
         if (data && data.length > 0) {
 
             if (data[0].Verified === true) {
-                window.location.href = "Dashboard.html";
+                if(data[0].UserType==='Buyer'){
+                    window.location.href="/Pages/UI/buyer-dashboard.html"
+                }
+                if(data[0].UserType==='Seller'){
+                    window.location.href="/Pages/UI/seller-dashboard.html"
+                }
                 return;
             }
 

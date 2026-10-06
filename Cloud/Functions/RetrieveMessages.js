@@ -1,6 +1,6 @@
 import { supabase } from "../Authentication/AuthConnection.js";
 
-export async function RetrieveUserMessages() {
+export async function RetrieveMessages() {
 
     
     try {

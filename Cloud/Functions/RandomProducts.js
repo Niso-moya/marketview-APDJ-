@@ -1,6 +1,6 @@
 import { supabase } from "../Authentication/AuthConnection.js";
 
-export async function Products() {
+export async function RandomProducts() {
     try {
         const{data:randomdata,error:randomerror}=await supabase.rpc('randomproductsuggestion')
         if(randomerror) throw randomerror

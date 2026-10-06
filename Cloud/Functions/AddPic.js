@@ -12,7 +12,7 @@ export async function getpic(Bucket,Link) {
     }
 }
 
-export async function AddPicture(Bucket,Picture,Link) {
+export async function AddPic(Bucket,Picture,Link) {
     try {
         const{data:image}=await supabase.storage
         .from(Bucket)

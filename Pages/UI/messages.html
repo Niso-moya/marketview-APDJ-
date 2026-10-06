@@ -189,9 +189,9 @@
 
     <script type="module">
 		//Grabs your message inbox history from the database.
-        import { RetrieveMessages } from './RetrieveMessages.js';
+        import { RetrieveMessages } from '../../Cloud/Functions/RetrieveMessages.js';
 		//Sends a new message to another user.
-        import { SendMessage } from './SendMessage.js';
+        import { SendMessage } from '../../Cloud/Functions/SendMessage.js';
 
 		// Load messages on startup
         const messageList = document.getElementById('messageList');

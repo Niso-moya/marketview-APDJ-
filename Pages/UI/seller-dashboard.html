@@ -208,10 +208,10 @@
 
     <script type="module">
 		//
-        import { RetrieveUserProducts } from './RetrieveUserProducts.js';
-        import { AddProduct } from './AddProduct.js';
-        import { AddPic } from './AddPic.js';
-        import { RetrieveUserDetails } from './RetrieveUserDetails.js';
+        import { RetrieveUserProducts } from '../../Cloud/Functions/RetrieveUserProducts.js';
+        import { AddProduct } from '../../Cloud/Functions/AddProduct.js';
+        import { AddPic } from '../../Cloud/Functions/AddPic.js';
+        import { RetrieveUserDetails } from '../../Cloud/Functions/RetrieveUserDetails.js';
 
         const myProductGrid = document.getElementById('myProductGrid');
         const addProductForm = document.getElementById('addProductForm');
@@ -249,12 +249,12 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     card.innerHTML = `
-                        <img src="${prod.medialink || 'logo.jpg'}" class="product-img" alt="Item">
+                        <img src="${prod.MediaLink || 'logo.jpg'}" class="product-img" alt="Item">
                         <div class="product-body">
-                            <div class="product-name">${prod.productname || prod.name}</div>
-                            <div class="product-price">$${prod.productprice || prod.price}</div>
-                            <div class="product-desc">${prod.productdescription || prod.description || ''}</div>
-                            <div class="product-location"><i class="fa-solid fa-location-dot"></i> ${prod.city || ''}, ${prod.country || ''}</div>
+                            <div class="product-name">${prod.ProductName || prod.name}</div>
+                            <div class="product-price">$${prod.ProductPrice || prod.price}</div>
+                            <div class="product-desc">${prod.ProductDescription || prod.description || ''}</div>
+                            <div class="product-location"><i class="fa-solid fa-location-dot"></i> ${prod.City || ''}, ${prod.Country || ''}</div>
                         </div>
                     `;
                     myProductGrid.appendChild(card);
@@ -287,7 +287,7 @@
                 if (fileInput.files.length > 0) {
                     const file = fileInput.files[0];
                     const fileName = `product_${Date.now()}_${file.name}`;
-                    mediaLink = await AddPic('product-images', file, fileName);
+                    mediaLink = await AddPic('Products', file, fileName);
                 }
 
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing listing...';

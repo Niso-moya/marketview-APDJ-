@@ -1,6 +1,6 @@
 import { supabase } from "../Authentication/AuthConnection.js";
 
-export async function FetchUserProducts() {
+export async function RetrieveUserProducts() {
     try {
         const {data:userdata,error:usererror}=await supabase.auth.getUser()
         const user=userdata.user

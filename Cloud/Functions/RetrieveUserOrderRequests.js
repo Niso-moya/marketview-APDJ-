@@ -1,6 +1,6 @@
 import { supabase } from "../Authentication/AuthConnection.js";
 
-export async function RetrieveUserRequests() {
+export async function RetrieveUserOrderRequests() {
     try {
         const{data:userdata,error:usererror}=await supabase.auth.getUser()
         const user=userdata.user
