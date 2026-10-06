@@ -180,14 +180,14 @@
                 }
 
                 requests.forEach(req => {
-                    const orderId = req.id || req.orderid;
+                    const orderId = req.Orderid || req.orderid;
                     const item = document.createElement('div');
                     item.className = 'order-item';
                     item.innerHTML = `
                         <div class="order-details">
                             <h3>Product Reference ID: #${req.productid || 'Item'}</h3>
                             <div class="order-meta">
-                                <i class="fa-solid fa-truck"></i> Destination: ${req.address || ''}, ${req.city || ''}, ${req.country || ''}<br>
+                                <i class="fa-solid fa-truck"></i> Destination: ${req.Address || ''}, ${req.City || ''}, ${req.Country || ''}<br>
                                 Status: <span>${req.status || 'Active Request'}</span>
                             </div>
                         </div>

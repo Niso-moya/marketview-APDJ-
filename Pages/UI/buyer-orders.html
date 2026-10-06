@@ -176,13 +176,13 @@
                     item.className = 'order-item';
                     item.innerHTML = `
                         <div class="order-details">
-                          <h3>Order Reference ID: #${order.id || order.orderid || 'N/A'}</h3>
+                          <h3>Order Reference ID: #${order.Orderid || order.orderid || 'N/A'}</h3>
                          <div class="order-meta">
-                                <i class="fa-solid fa-location-dot"></i> Shipping Destination: ${order.address || ''}, ${order.city || ''}, ${order.country || ''}<br>
+                                <i class="fa-solid fa-location-dot"></i> Shipping Destination: ${order.Address || ''}, ${order.city || ''}, ${order.country || ''}<br>
                                 Date Logged: ${order.created_at ? new Date(order.created_at).toLocaleDateString() : 'Recent'}
                             </div>
                         </div>
-                        <div class="status-badge">${order.status || 'Active / Processing'}</div>
+                        <div class="status-badge">${order.Status || 'Active / Processing'}</div>
                     `;
                     listContainer.appendChild(item);
                 });

@@ -194,7 +194,7 @@
             <a href="buyer-dashboard.html" class="active">Marketplace</a>
             <a href="buyer-orders.html">My Purchases</a>
             <a href="messages.html">Messages</a>
-            <a href="index.html" style="color: var(--danger);">Logout</a>
+            <a href="../SignUp.html" style="color: var(--danger);">Logout</a>
         </div>
     </nav>
 
@@ -279,12 +279,12 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <img src="${prod.medialink || 'logo.jpg'}" class="product-img" alt="Product">
+                    <img src="${prod.MediaLink || 'logo.jpg'}" class="product-img" alt="Product">
                     <div class="product-body">
-                        <div class="product-name">${prod.productname || prod.name}</div>
-                        <div class="product-price">$${prod.productprice || prod.price}</div>
-                        <div class="product-desc">${prod.productdescription || prod.description || 'No description provided.'}</div>
-                        <button class="btn" onclick="openOrderModal('${prod.id || prod.productid}')">Purchase Item</button>
+                        <div class="product-name">${prod.ProductName || prod.name}</div>
+                        <div class="product-price">$${prod.ProductPrice || prod.price}</div>
+                        <div class="product-desc">${prod.ProductDescription || prod.description || 'No description provided.'}</div>
+                        <button class="btn" onclick="openOrderModal('${prod.Productid || prod.productid}')">Purchase Item</button>
                     </div>
                 `;
                 productGrid.appendChild(card);
@@ -327,7 +327,7 @@
                 if (userDetails && userDetails.length > 0) {
                     const seller = userDetails[0];
                     document.getElementById('sellerInfoContainer').innerHTML = `
-                        <strong>Verified Seller:</strong> ${seller.name || ''} ${seller.surname || ''} (@${seller.username || 'unknown'})
+                        <strong>Verified Seller:</strong> ${seller.Name || ''} ${seller.Surname || ''} (@${seller.Username || 'unknown'})
                     `;
                 } else {
                     document.getElementById('sellerInfoContainer').innerHTML = 'Seller verification unavailable.';
