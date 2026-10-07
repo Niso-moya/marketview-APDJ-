@@ -3,339 +3,1889 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Messages | MarketView Buyer Terminal</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
     <style>
+
         :root {
             --primary: #fbbf24;
             --primary-hover: #f59e0b;
             --primary-glow: rgba(251, 191, 36, 0.25);
+
             --glass: rgba(13, 22, 30, 0.78);
             --glass-card: rgba(18, 29, 40, 0.88);
             --glass-border: rgba(245, 158, 11, 0.25);
+
             --text-main: #FFFFFF;
             --text-dim: #94a3b8;
+
             --danger: #f87171;
             --success: #34d399;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Archivo', sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Archivo', sans-serif;
+        }
 
         body {
             min-height: 100vh;
             color: var(--text-main);
-            background: linear-gradient(rgba(10, 25, 30, 0.82), rgba(5, 12, 18, 0.92)), url('bg.jpg');
+
+            background:
+                linear-gradient(
+                    rgba(10, 25, 30, 0.82),
+                    rgba(5, 12, 18, 0.92)
+                ),
+                url('bg.jpg');
+
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+
             padding-bottom: 60px;
         }
 
-        /* --- NAVIGATION BAR --- */
+        /* =========================
+           NAVIGATION
+        ========================= */
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             padding: 18px 40px;
+
             background: rgba(10, 17, 24, 0.9);
+
             backdrop-filter: blur(20px);
+
             border-bottom: 1px solid var(--glass-border);
+
             position: sticky;
             top: 0;
+
             z-index: 100;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .nav-brand { display: flex; align-items: center; gap: 14px; }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
         .logo-ring {
-            width: 42px; height: 42px; border-radius: 50%;
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
             border: 2px solid var(--primary);
-            overflow: hidden; background: rgba(8, 15, 22, 0.95);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
-        .brand-title { font-size: 1.15rem; font-weight: 800; letter-spacing: 1.5px; color: var(--text-main); text-transform: uppercase; }
-        .brand-title span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; flex-wrap: wrap; }
+            overflow: hidden;
+
+            background: rgba(8, 15, 22, 0.95);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 0 15px var(--primary-glow);
+        }
+
+        .logo-ring img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            color: var(--text-main);
+
+            text-transform: uppercase;
+        }
+
+        .brand-title span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+
+            gap: 20px;
+
+            align-items: center;
+
+            position: relative;
+
+            flex-wrap: wrap;
+        }
+
         .nav-links a {
-            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            transition: color 0.2s ease; display: flex; align-items: center; gap: 6px; position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+            color: var(--text-dim);
 
-        /* --- HOVER TOOLTIPS --- */
-        .nav-links a::after {
-            content: attr(data-tooltip);
-            position: absolute; bottom: -48px; left: 50%;
-            transform: translateX(-50%) translateY(5px);
-            background: rgba(10, 17, 24, 0.98); color: #cbd5e1;
-            padding: 10px 14px; border-radius: 10px; font-size: 0.72rem; font-weight: 500;
-            white-space: nowrap; border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
-            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200; pointer-events: none; letter-spacing: 0.3px; line-height: 1.4; text-align: center;
-        }
-        .nav-links a::before {
-            content: ''; position: absolute; bottom: -16px; left: 50%;
-            transform: translateX(-50%) translateY(5px); border-width: 5px; border-style: solid;
-            border-color: transparent transparent var(--glass-border) transparent;
-            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200; pointer-events: none;
-        }
-        .nav-links a:hover::after, .nav-links a:hover::before {
-            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+            text-decoration: none;
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: color 0.2s ease;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            position: relative;
         }
 
-        /* --- CONTAINER & CARDS --- */
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
         .container {
             max-width: 960px;
+
             margin: 40px auto;
+
             padding: 0 24px;
+
             display: flex;
+
             flex-direction: column;
+
             gap: 25px;
         }
 
+        /* =========================
+           CARDS
+        ========================= */
+
         .card {
             background: var(--glass);
+
             backdrop-filter: blur(20px);
+
             border: 1px solid var(--glass-border);
+
             border-radius: 22px;
+
             padding: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+
+            box-shadow:
+                0 25px 50px rgba(0,0,0,0.7);
         }
 
         .header-section {
-            display: flex; flex-direction: column; gap: 4px;
-            margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 15px;
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+
+            margin-bottom: 20px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+            padding-bottom: 15px;
         }
 
         h2 {
-            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.3px; color: #fff;
-            display: flex; align-items: center; gap: 10px;
+            font-size: 1.25rem;
+
+            font-weight: 800;
+
+            letter-spacing: -0.3px;
+
+            color: #fff;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
         }
-        h2 i { color: var(--primary); }
+
+        h2 i {
+            color: var(--primary);
+        }
 
         .verified-intro {
-            font-size: 0.75rem; color: var(--text-dim); font-weight: 500;
-            display: flex; align-items: center; gap: 6px; margin-top: 4px;
-        }
-        .verified-intro i { color: var(--success); font-size: 0.7rem; }
+            font-size: 0.75rem;
 
-        /* --- WELL-STRUCTURED STACKED MESSAGE LIST --- */
-        .message-list {
-            display: flex; flex-direction: column; gap: 16px;
-            max-height: 520px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--primary) transparent; padding-right: 4px;
+            color: var(--text-dim);
+
+            font-weight: 500;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 4px;
         }
-        .message-list::-webkit-scrollbar { width: 6px; }
-        .message-list::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 4px; }
+
+        .verified-intro i {
+            color: var(--success);
+
+            font-size: 0.7rem;
+        }
+
+        /* =========================
+           MESSAGE LIST
+        ========================= */
+
+        .message-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+
+            max-height: 520px;
+
+            overflow-y: auto;
+
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                var(--primary)
+                transparent;
+
+            padding-right: 4px;
+        }
+
+        .message-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .message-list::-webkit-scrollbar-thumb {
+            background:
+                rgba(245,158,11,0.3);
+
+            border-radius: 4px;
+        }
+
+        /* =========================
+           MESSAGE ITEM
+        ========================= */
 
         .message-item {
-            background: var(--glass-card); border: 1px solid var(--glass-border);
-            border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3); transition: transform 0.2s ease;
-        }
-        .message-item:hover { transform: translateY(-2px); }
+            background: var(--glass-card);
 
-        /* Stacked Field Rows */
+            border: 1px solid var(--glass-border);
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.3);
+
+            position: relative;
+        }
+
         .msg-field-row {
-            display: flex; flex-direction: column; gap: 4px;
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+
+            padding-right: 30px;
         }
 
         .msg-field-label {
-            font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;
-            font-weight: 700; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;
+            font-size: 0.7rem;
+
+            color: var(--text-dim);
+
+            text-transform: uppercase;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
         }
-        .msg-field-label i { color: var(--primary); }
+
+        .msg-field-label i {
+            color: var(--primary);
+        }
 
         .msg-field-value {
-            font-size: 0.85rem; color: #fff; font-family: 'Roboto Mono', monospace;
-            background: rgba(8, 15, 22, 0.8); padding: 10px 14px; border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08); word-break: break-all;
+            font-size: 0.85rem;
+
+            color: #fff;
+
+            font-family: 'Roboto Mono', monospace;
+
+            background:
+                rgba(8,15,22,0.8);
+
+            padding: 10px 14px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            word-break: break-word;
         }
 
-        .msg-field-value.highlight {
-            color: var(--primary); border-color: rgba(251, 191, 36, 0.2);
-            text-decoration: underline; text-underline-offset: 3px;
+        /* =========================
+           CLICKABLE MERCHANT
+        ========================= */
+
+        .merchant-name {
+            width: 100%;
+
+            color: var(--primary);
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+
+            text-decoration: none;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            text-align: left;
+
+            border: none;
+
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .merchant-name:hover {
+            background:
+                rgba(251,191,36,0.12);
+
+            border-color:
+                rgba(251,191,36,0.45);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .merchant-name .reply-icon {
+            font-size: 0.7rem;
+
+            opacity: 0.7;
+
+            white-space: nowrap;
         }
 
         .msg-divider {
-            height: 1px; background: rgba(255, 255, 255, 0.08); width: 100%;
+            height: 1px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            width: 100%;
         }
 
-        /* --- FORM CONTROLS --- */
-        .form-group { margin-bottom: 16px; text-align: left; }
-        .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
-        .form-control {
-            width: 100%; padding: 12px 14px; background: rgba(8, 15, 22, 0.85);
-            border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #fff;
-            font-size: 0.8rem; outline: none; transition: border-color 0.2s;
+        /* =========================
+           SELECTED RECIPIENT
+        ========================= */
+
+        .selected-recipient {
+            display: none;
+
+            margin-bottom: 18px;
+
+            padding: 14px 16px;
+
+            background:
+                rgba(251,191,36,0.08);
+
+            border:
+                1px solid rgba(251,191,36,0.25);
+
+            border-radius: 12px;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
         }
-        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+        .selected-recipient.visible {
+            display: flex;
+        }
+
+        .selected-recipient-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-width: 0;
+        }
+
+        .selected-recipient-icon {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(251,191,36,0.15);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+        .selected-recipient-text {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+
+            min-width: 0;
+        }
+
+        .selected-recipient-label {
+            font-size: 0.65rem;
+
+            color: var(--text-dim);
+
+            text-transform: uppercase;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        .selected-recipient-name {
+            color: #fff;
+
+            font-size: 0.85rem;
+
+            font-weight: 700;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .change-recipient-btn {
+            border: none;
+
+            background: transparent;
+
+            color: var(--text-dim);
+
+            cursor: pointer;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            flex-shrink: 0;
+        }
+
+        .change-recipient-btn:hover {
+            color: var(--primary);
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 16px;
+
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 0.75rem;
+
+            color: var(--text-dim);
+
+            margin-bottom: 6px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+
+            padding: 12px 16px;
+
+            background:
+                rgba(6,11,16,0.95);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            border-radius: 10px;
+
+            color: #fff;
+
+            font-size: 0.85rem;
+
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 10px var(--primary-glow);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
 
         .btn {
-            width: 100%; padding: 13px; background: rgba(245, 158, 11, 0.2); color: #fff;
-            border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; font-weight: 700;
-            font-size: 0.8rem; text-transform: uppercase; cursor: pointer; margin-top: 5px; transition: background 0.2s;
-        }
-        .btn:hover { background: rgba(245, 158, 11, 0.35); }
+            width: 100%;
 
-        .status-message { margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 0.75rem; display: none; text-align: center; }
-        .status-message.success { background: rgba(52, 211, 153, 0.2); color: #fff; border: 1px solid var(--success); }
-        .status-message.error { background: rgba(248, 113, 113, 0.2); color: #fff; border: 1px solid var(--danger); }
-        .empty-state { text-align: center; color: var(--text-dim); padding: 30px; font-size: 0.85rem; }
+            padding: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-hover)
+                );
+
+            color: #091118;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-weight: 800;
+
+            font-size: 0.8rem;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform:
+                translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-size: 0.8rem;
+
+            display: none;
+
+            text-align: center;
+
+            font-weight: 600;
+        }
+
+        .status-message.success {
+            background:
+                rgba(52,211,153,0.15);
+
+            color: #34d399;
+
+            border:
+                1px solid rgba(52,211,153,0.3);
+        }
+
+        .status-message.error {
+            background:
+                rgba(248,113,113,0.15);
+
+            color: #f87171;
+
+            border:
+                1px solid rgba(248,113,113,0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+
+            color: var(--text-dim);
+
+            padding: 40px;
+
+            font-size: 0.85rem;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            nav {
+                padding: 15px 20px;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .container {
+                margin: 25px auto;
+
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .selected-recipient {
+                align-items: flex-start;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-    <nav>
-        <div class="nav-brand">
-            <div class="logo-ring">
-                <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
-            </div>
-            <span class="brand-title">MarketView <span>[Buyer Terminal]</span></span>
-        </div>
-        <div class="nav-links">
-            <a href="buyer-dashboard.html" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> 1. Browse Catalog</a>
-            <a href="buyer-orders.html" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-truck-ramp-box"></i> 2. Track Purchases</a>
-            <a href="buyer-messages.html" class="active" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> 3. Merchant Chats</a>
-            <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active session and log out of the terminal"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-        </div>
-    </nav>
+<nav>
 
-    <div class="container">
-        <!-- Inbox Card -->
-        <div class="card">
-            <div class="header-section">
-                <h2><i class="fa-solid fa-inbox"></i> Buyer Communication Inbox</h2>
-                <div class="verified-intro">
-                    <i class="fa-solid fa-shield-check"></i> Direct encrypted transmission stream with verified marketplace merchants.
-                </div>
-            </div>
-            <div class="message-list" id="messageList">
-                <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading message stream...</div>
-            </div>
+    <div class="nav-brand">
+
+        <div class="logo-ring">
+
+            <img
+                src="logo.jpg"
+                alt="Logo"
+                onerror="this.style.display='none'"
+            >
+
         </div>
 
-        <!-- Transmit Message Card -->
-        <div class="card">
-            <div class="header-section">
-                <h2><i class="fa-solid fa-paper-plane"></i> Contact Merchant</h2>
-                <div class="verified-intro">
-                    <i class="fa-solid fa-circle-info"></i> Send direct inquiries regarding catalog items, pricing, or custom fulfillment.
-                </div>
-            </div>
-            <form id="sendMessageForm">
-                <div class="form-group">
-                    <label>Merchant UUID</label>
-                    <input type="text" id="recipientId" class="form-control" required placeholder="Enter destination merchant user ID">
-                </div>
-                <div class="form-group">
-                    <label>Inquiry Content</label>
-                    <textarea id="messageContent" class="form-control" rows="3" required placeholder="Type your product inquiry or negotiation terms..."></textarea>
-                </div>
-                <button type="submit" class="btn" id="sendBtn">Transmit Inquiry</button>
-            </form>
-            <div id="formStatus" class="status-message"></div>
-        </div>
+        <span class="brand-title">
+
+            MarketView
+
+            <span>[Buyer Terminal]</span>
+
+        </span>
+
     </div>
 
-    <script type="module">
-        import { RetrieveMessages } from '../../Cloud/Functions/RetrieveMessages.js';
-        import { SendMessage } from '../../Cloud/Functions/SendMessage.js';
 
-        const messageList = document.getElementById('messageList');
-        const sendMessageForm = document.getElementById('sendMessageForm');
-        const formStatus = document.getElementById('formStatus');
+    <div class="nav-links">
 
-        async function loadMessages() {
-            try {
-                const messages = await RetrieveMessages();
-                console.log("INBOX MESSAGES OBJECT:", messages);
-                messageList.innerHTML = '';
+        <a
+            href="buyer-dashboard.html"
+        >
+            <i class="fa-solid fa-store"></i>
 
-                if (!messages || messages.length === 0) {
-                    messageList.innerHTML = '<div class="empty-state">No active messages in your inbox.</div>';
-                    return;
-                }
+            1. Browse Catalog
+        </a>
 
-                messages.forEach(msg => {
-                    const item = document.createElement('div');
-                    item.className = 'message-item';
 
-                    // Extract exact fields from JSON structure
-                    const sendingUser = msg.SendingUser || msg.senderid || msg.sendinguser || msg.sender_id || msg.user_id || msg.from || 'N/A';
-                    const receivingUser = msg.RecievingUser || msg.recipientid || msg.receivinguser || msg.recipient_id || 'N/A';
-                    const messageText = msg.Message || msg.message || msg.content || msg.body || msg.text || '';
-                    const timestamp = msg.created_at || msg.timestamp || msg.date || msg.time || '';
-                    const formattedDate = timestamp ? new Date(timestamp).toLocaleString() : 'Recent Timestamp';
+        <a
+            href="buyer-orders.html"
+        >
+            <i class="fa-solid fa-truck-ramp-box"></i>
 
-                    item.innerHTML = `
-                        <div class="msg-field-row">
-                            <span class="msg-field-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Sending User (UUID)</span>
-                            <span class="msg-field-value highlight">${sendingUser}</span>
-                        </div>
-                        <div class="msg-divider"></div>
-                        <div class="msg-field-row">
-                            <span class="msg-field-label"><i class="fa-solid fa-arrow-down-left-and-arrow-up-right-to-center"></i> Receiving User (UUID)</span>
-                            <span class="msg-field-value">${receivingUser}</span>
-                        </div>
-                        <div class="msg-divider"></div>
-                        <div class="msg-field-row">
-                            <span class="msg-field-label"><i class="fa-solid fa-message"></i> Message Content</span>
-                            <span class="msg-field-value" style="white-space: pre-wrap; color: #fff;">${messageText}</span>
-                        </div>
-                        <div class="msg-divider"></div>
-                        <div class="msg-field-row">
-                            <span class="msg-field-label"><i class="fa-solid fa-clock"></i> Transmission Time</span>
-                            <span class="msg-field-value" style="color: var(--text-dim);">${formattedDate}</span>
-                        </div>
-                    `;
-                    messageList.appendChild(item);
-                });
-            } catch (err) {
-                console.error("Error loading inbox messages:", err);
-                messageList.innerHTML = '<div class="empty-state" style="color: var(--danger);">Failed to load messages.</div>';
-            }
+            2. Track Purchases
+        </a>
+
+
+        <a
+            href="buyer-messages.html"
+            class="active"
+        >
+            <i class="fa-solid fa-comments"></i>
+
+            3. Merchant Chats
+        </a>
+
+
+        <a
+            href="../SignUp.html"
+            style="color: var(--danger);"
+        >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <!-- =========================
+         INBOX
+    ========================== -->
+
+    <div class="card">
+
+        <div class="header-section">
+
+            <h2>
+
+                <i class="fa-solid fa-inbox"></i>
+
+                Buyer Communication Inbox
+
+            </h2>
+
+
+            <div class="verified-intro">
+
+                <i class="fa-solid fa-shield-check"></i>
+
+                Secure encrypted communication stream
+                with marketplace merchants.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="message-list"
+            id="messageList"
+        >
+
+            <div class="empty-state">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                Loading message stream...
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         REPLY
+    ========================== -->
+
+    <div
+        class="card"
+        id="replyCard"
+    >
+
+        <div class="header-section">
+
+            <h2>
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                Reply to Merchant
+
+            </h2>
+
+        </div>
+
+
+        <!-- Selected merchant -->
+
+        <div
+            id="selectedRecipient"
+            class="selected-recipient"
+        >
+
+            <div class="selected-recipient-info">
+
+                <div class="selected-recipient-icon">
+
+                    <i class="fa-solid fa-store"></i>
+
+                </div>
+
+
+                <div class="selected-recipient-text">
+
+                    <span class="selected-recipient-label">
+                        Replying to
+                    </span>
+
+
+                    <span
+                        id="selectedRecipientName"
+                        class="selected-recipient-name"
+                    >
+                        No merchant selected
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="changeRecipientBtn"
+                class="change-recipient-btn"
+            >
+                Change
+            </button>
+
+        </div>
+
+
+        <form id="sendMessageForm">
+
+            <div class="form-group">
+
+                <label>
+                    Merchant
+                </label>
+
+
+                <input
+                    type="text"
+                    id="recipientDisplay"
+                    class="form-control"
+                    readonly
+                    placeholder="Select a merchant from the inbox"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Response Content
+                </label>
+
+
+                <textarea
+                    id="messageContent"
+                    class="form-control"
+                    rows="4"
+                    required
+                    placeholder="Type your reply to the merchant..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn"
+                id="sendBtn"
+                disabled
+            >
+                Select a Merchant First
+            </button>
+
+        </form>
+
+
+        <div
+            id="formStatus"
+            class="status-message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+    import {
+        RetrieveMessages
+    } from '../../Cloud/Functions/RetrieveMessages.js';
+
+    import {
+        RetrieveUserDetails
+    } from '../../Cloud/Functions/RetrieveUserDetails.js';
+
+    import {
+        GetUserDetails
+    } from '../../Cloud/Functions/GetUserInfo.js';
+
+    import {
+        SendMessage
+    } from '../../Cloud/Functions/SendMessage.js';
+
+
+    /*
+    ============================================================
+        DOM REFERENCES
+    ============================================================
+    */
+
+    const messageList =
+        document.getElementById('messageList');
+
+    const sendMessageForm =
+        document.getElementById('sendMessageForm');
+
+    const formStatus =
+        document.getElementById('formStatus');
+
+    const messageContentInput =
+        document.getElementById('messageContent');
+
+    const recipientDisplay =
+        document.getElementById('recipientDisplay');
+
+    const selectedRecipient =
+        document.getElementById('selectedRecipient');
+
+    const selectedRecipientName =
+        document.getElementById('selectedRecipientName');
+
+    const changeRecipientBtn =
+        document.getElementById('changeRecipientBtn');
+
+    const sendBtn =
+        document.getElementById('sendBtn');
+
+
+    /*
+    ============================================================
+        CURRENT RECIPIENT
+    ============================================================
+    */
+
+    let selectedRecipientId = null;
+
+    let selectedRecipientUsername = null;
+
+
+    /*
+    ============================================================
+        SELECT MERCHANT
+    ============================================================
+    */
+
+    function selectMerchant(
+        userId,
+        username
+    ) {
+
+        if (!userId) {
+
+            console.error(
+                'Cannot select merchant without user ID.'
+            );
+
+            return;
         }
-        loadMessages();
 
-        sendMessageForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('sendBtn');
-            const recipient = document.getElementById('recipientId').value.trim();
-            const content = document.getElementById('messageContent').value.trim();
 
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitting...';
-            formStatus.style.display = 'none';
+        /*
+        Store UUID internally.
+
+        The user never sees this value.
+        */
+
+        selectedRecipientId =
+            userId;
+
+
+        selectedRecipientUsername =
+            username || 'Merchant';
+
+
+        /*
+        Update visible merchant name.
+        */
+
+        recipientDisplay.value =
+            selectedRecipientUsername;
+
+
+        selectedRecipientName.textContent =
+            selectedRecipientUsername;
+
+
+        selectedRecipient.classList.add(
+            'visible'
+        );
+
+
+        /*
+        Enable reply button.
+        */
+
+        sendBtn.disabled =
+            false;
+
+        sendBtn.innerHTML =
+            '<i class="fa-solid fa-paper-plane"></i> Transmit Response';
+
+
+        formStatus.style.display =
+            'none';
+
+
+        /*
+        Scroll to reply section.
+        */
+
+        document
+            .getElementById('replyCard')
+            .scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+
+        /*
+        Focus reply box.
+        */
+
+        setTimeout(() => {
+
+            messageContentInput.focus();
+
+        }, 400);
+
+    }
+
+
+    /*
+    ============================================================
+        CLEAR MERCHANT
+    ============================================================
+    */
+
+    function clearMerchant() {
+
+        selectedRecipientId =
+            null;
+
+        selectedRecipientUsername =
+            null;
+
+
+        recipientDisplay.value =
+            '';
+
+
+        selectedRecipientName.textContent =
+            'No merchant selected';
+
+
+        selectedRecipient.classList.remove(
+            'visible'
+        );
+
+
+        sendBtn.disabled =
+            true;
+
+        sendBtn.innerHTML =
+            'Select a Merchant First';
+
+    }
+
+
+    /*
+    ============================================================
+        ESCAPE HTML
+    ============================================================
+    */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement('div');
+
+        div.textContent =
+            value ?? '';
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+    ============================================================
+        LOAD MESSAGES
+    ============================================================
+    */
+
+    async function loadMessages() {
+
+        try {
+
+            messageList.innerHTML = `
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    Loading message stream...
+
+                </div>
+            `;
+
+
+            const messages =
+                await RetrieveMessages();
+
+
+            console.log(
+                'BUYER INBOX MESSAGES OBJECT:',
+                messages
+            );
+
+
+            messageList.innerHTML =
+                '';
+
+
+            if (
+                !messages ||
+                messages.length === 0
+            ) {
+
+                messageList.innerHTML = `
+                    <div class="empty-state">
+
+                        No active messages
+                        in your inbox.
+
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            /*
+            ====================================================
+                GET CURRENT BUYER DETAILS
+            ====================================================
+            */
+
+            let myName =
+                'You';
+
 
             try {
-                const result = await SendMessage(recipient, content);
-                if (result) {
-                    formStatus.style.display = 'block';
-                    formStatus.className = 'status-message success';
-                    formStatus.textContent = 'Inquiry successfully transmitted!';
-                    sendMessageForm.reset();
-                    loadMessages();
-                } else {
-                    throw new Error('Transmission response empty.');
+
+                const myDetails =
+                    await RetrieveUserDetails();
+
+
+                if (
+                    myDetails &&
+                    myDetails.length > 0 &&
+                    myDetails[0].Username
+                ) {
+
+                    myName =
+                        myDetails[0].Username;
+
                 }
-            } catch (err) {
-                formStatus.style.display = 'block';
-                formStatus.className = 'status-message error';
-                formStatus.textContent = 'Transmission failed. Verify merchant UUID.';
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Transmit Inquiry';
+
+            } catch (userError) {
+
+                console.error(
+                    'Could not retrieve buyer details:',
+                    userError
+                );
+
             }
-        });
-    </script>
+
+
+            /*
+            ====================================================
+                BUILD MESSAGE CARDS
+            ====================================================
+            */
+
+            for (const msg of messages) {
+
+                const item =
+                    document.createElement('div');
+
+                item.className =
+                    'message-item';
+
+
+                /*
+                ------------------------------------------------
+                    SENDER = MERCHANT
+                ------------------------------------------------
+                */
+
+                const sendingUser =
+                    msg.SendingUser ||
+                    msg.senderid ||
+                    msg.sendinguser ||
+                    msg.sender_id ||
+                    msg.user_id ||
+                    msg.from ||
+                    null;
+
+
+                /*
+                ------------------------------------------------
+                    RECEIVER
+                ------------------------------------------------
+                */
+
+                const receivingUser =
+                    msg.RecievingUser ||
+                    msg.recipientid ||
+                    msg.receivinguser ||
+                    msg.recipient_id ||
+                    null;
+
+
+                /*
+                ------------------------------------------------
+                    MESSAGE
+                ------------------------------------------------
+                */
+
+                const messageText =
+                    msg.Message ||
+                    msg.message ||
+                    msg.content ||
+                    msg.body ||
+                    msg.text ||
+                    '';
+
+
+                /*
+                ------------------------------------------------
+                    TIME
+                ------------------------------------------------
+                */
+
+                const timestamp =
+                    msg.created_at ||
+                    msg.timestamp ||
+                    msg.date ||
+                    msg.time ||
+                    '';
+
+
+                const formattedDate =
+                    timestamp
+                        ? new Date(
+                            timestamp
+                        ).toLocaleString()
+                        : 'Recent Timestamp';
+
+
+                /*
+                =================================================
+                    GET MERCHANT USERNAME
+                =================================================
+                */
+
+                let merchantUsername =
+                    'Unknown Merchant';
+
+
+                if (sendingUser) {
+
+                    try {
+
+                        const userDetails =
+                            await GetUserDetails(
+                                sendingUser
+                            );
+
+
+                        if (
+                            userDetails &&
+                            userDetails.length > 0 &&
+                            userDetails[0].Username
+                        ) {
+
+                            merchantUsername =
+                                userDetails[0].Username;
+
+                        }
+
+                    } catch (userError) {
+
+                        console.error(
+                            'Could not retrieve merchant details:',
+                            userError
+                        );
+
+                    }
+
+                }
+
+
+                /*
+                =================================================
+                    CREATE MESSAGE CARD
+                =================================================
+                */
+
+                item.innerHTML = `
+
+                    <!-- MERCHANT -->
+
+                    <div class="msg-field-row">
+
+                        <span class="msg-field-label">
+
+                            <i class="fa-solid fa-store"></i>
+
+                            Sending Merchant
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="msg-field-value merchant-name"
+                        >
+
+                            <span>
+
+                                ${escapeHTML(
+                                    merchantUsername
+                                )}
+
+                            </span>
+
+
+                            <span class="reply-icon">
+
+                                <i class="fa-solid fa-reply"></i>
+
+                                Reply
+
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="msg-divider"></div>
+
+
+                    <!-- RECEIVER -->
+
+                    <div class="msg-field-row">
+
+                        <span class="msg-field-label">
+
+                            <i class="fa-solid fa-user-check"></i>
+
+                            Receiving User
+
+                        </span>
+
+
+                        <span class="msg-field-value">
+
+                            ${escapeHTML(
+                                myName
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="msg-divider"></div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="msg-field-row">
+
+                        <span class="msg-field-label">
+
+                            <i class="fa-solid fa-message"></i>
+
+                            Message Content
+
+                        </span>
+
+
+                        <span
+                            class="msg-field-value"
+                            style="
+                                white-space: pre-wrap;
+                                color: #fff;
+                            "
+                        >
+
+                            ${escapeHTML(
+                                messageText
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="msg-divider"></div>
+
+
+                    <!-- TIME -->
+
+                    <div class="msg-field-row">
+
+                        <span class="msg-field-label">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            Transmission Time
+
+                        </span>
+
+
+                        <span
+                            class="msg-field-value"
+                            style="
+                                color: var(--text-dim);
+                            "
+                        >
+
+                            ${escapeHTML(
+                                formattedDate
+                            )}
+
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                /*
+                =================================================
+                    MERCHANT CLICK
+                =================================================
+                */
+
+                const merchantButton =
+                    item.querySelector(
+                        '.merchant-name'
+                    );
+
+
+                merchantButton.addEventListener(
+                    'click',
+                    () => {
+
+                        selectMerchant(
+                            sendingUser,
+                            merchantUsername
+                        );
+
+                    }
+                );
+
+
+                /*
+                Add to inbox.
+                */
+
+                messageList.appendChild(
+                    item
+                );
+
+            }
+
+        } catch (err) {
+
+            console.error(
+                'Error loading inbox messages:',
+                err
+            );
+
+
+            messageList.innerHTML = `
+
+                <div
+                    class="empty-state"
+                    style="color: var(--danger);"
+                >
+
+                    Failed to load messages.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /*
+    ============================================================
+        CHANGE MERCHANT
+    ============================================================
+    */
+
+    changeRecipientBtn.addEventListener(
+        'click',
+        () => {
+
+            clearMerchant();
+
+
+            messageList.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        }
+    );
+
+
+    /*
+    ============================================================
+        SEND REPLY
+    ============================================================
+    */
+
+    sendMessageForm.addEventListener(
+        'submit',
+        async (e) => {
+
+            e.preventDefault();
+
+
+            /*
+            UUID is retrieved internally.
+
+            The buyer does NOT type it.
+            */
+
+            if (!selectedRecipientId) {
+
+                formStatus.style.display =
+                    'block';
+
+                formStatus.className =
+                    'status-message error';
+
+                formStatus.textContent =
+                    'Please select a merchant first.';
+
+                return;
+
+            }
+
+
+            const content =
+                messageContentInput
+                    .value
+                    .trim();
+
+
+            if (!content) {
+
+                formStatus.style.display =
+                    'block';
+
+                formStatus.className =
+                    'status-message error';
+
+                formStatus.textContent =
+                    'Please enter a message.';
+
+                return;
+
+            }
+
+
+            sendBtn.disabled =
+                true;
+
+            sendBtn.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Transmitting...
+            `;
+
+
+            formStatus.style.display =
+                'none';
+
+
+            try {
+
+                /*
+                The UUID is passed internally
+                to your existing SendMessage().
+                */
+
+                const result =
+                    await SendMessage(
+                        selectedRecipientId,
+                        content
+                    );
+
+
+                if (!result) {
+
+                    throw new Error(
+                        'Transmission response empty.'
+                    );
+
+                }
+
+
+                formStatus.style.display =
+                    'block';
+
+                formStatus.className =
+                    'status-message success';
+
+                formStatus.textContent =
+                    `Response successfully sent to ${selectedRecipientUsername}.`;
+
+
+                /*
+                Clear only the message.
+
+                Keep merchant selected.
+                */
+
+                messageContentInput.value =
+                    '';
+
+
+                /*
+                Refresh inbox.
+                */
+
+                await loadMessages();
+
+
+            } catch (err) {
+
+                console.error(
+                    'Message transmission failed:',
+                    err
+                );
+
+
+                formStatus.style.display =
+                    'block';
+
+                formStatus.className =
+                    'status-message error';
+
+                formStatus.textContent =
+                    'Transmission failed. Please try again.';
+
+            } finally {
+
+                if (selectedRecipientId) {
+
+                    sendBtn.disabled =
+                        false;
+
+                    sendBtn.innerHTML =
+                        '<i class="fa-solid fa-paper-plane"></i> Transmit Response';
+
+                } else {
+
+                    sendBtn.disabled =
+                        true;
+
+                    sendBtn.innerHTML =
+                        'Select a Merchant First';
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /*
+    ============================================================
+        OPTIONAL URL RECIPIENT
+    ============================================================
+
+        Example:
+
+        buyer-messages.html?recipient=UUID
+
+        The UUID can still be supplied internally from
+        another part of your application.
+
+        It will be converted to the merchant's username
+        before being displayed.
+    ============================================================
+    */
+
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const prefilledRecipient =
+        urlParams.get(
+            'recipient'
+        );
+
+
+    async function handlePrefilledRecipient() {
+
+        if (!prefilledRecipient) {
+            return;
+        }
+
+
+        try {
+
+            const userDetails =
+                await GetUserDetails(
+                    prefilledRecipient
+                );
+
+
+            const username =
+                userDetails &&
+                userDetails.length > 0
+                    ? userDetails[0].Username
+                    : 'Merchant';
+
+
+            selectMerchant(
+                prefilledRecipient,
+                username
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Could not load prefilled recipient:',
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+    ============================================================
+        INITIALIZE
+    ============================================================
+    */
+
+    await loadMessages();
+
+    await handlePrefilledRecipient();
+
+</script>
+
 </body>
 </html>
