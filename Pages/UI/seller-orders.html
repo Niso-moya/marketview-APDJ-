@@ -266,7 +266,7 @@ Confidential Technical Documentation.
                     item.className = 'order-card';
                     item.innerHTML = `
                         <div class="order-details">
-                            <h3>Product Ref: #${req.productid || 'Item'}</h3>
+                            <h3>Product Ref: #${req.Productid || 'Item'}</h3>
                             <div class="order-meta">
                                 <i class="fa-solid fa-truck"></i> Destination: ${req.Address || req.address || ''}, ${req.City || req.city || ''}, ${req.Country || req.country || ''}<br>
                                 <i class="fa-solid fa-info-circle"></i> Status: <span>${req.status || 'Active Request'}</span>
