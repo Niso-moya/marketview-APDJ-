@@ -62,63 +62,34 @@
         .brand-title { font-size: 1.15rem; font-weight: 800; letter-spacing: 1.5px; color: var(--text-main); text-transform: uppercase; }
         .brand-title span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; }
+        .nav-links { display: flex; gap: 20px; align-items: center; position: relative; flex-wrap: wrap; }
         .nav-links a {
-            color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            transition: color 0.2s ease;
-            display: flex; align-items: center; gap: 6px;
-            position: relative;
+            color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            transition: color 0.2s ease; display: flex; align-items: center; gap: 6px; position: relative;
         }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- DETAILED HOVER TOOLTIP STYLING --- */
+        /* --- DETAILED HOVER TOOLTIP STYLING FOR NAVBAR --- */
         .nav-links a::after {
             content: attr(data-tooltip);
-            position: absolute;
-            bottom: -48px;
-            left: 50%;
+            position: absolute; bottom: -48px; left: 50%;
             transform: translateX(-50%) translateY(5px);
-            background: rgba(10, 17, 24, 0.98);
-            color: #cbd5e1;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 0.72rem;
-            font-weight: 500;
-            white-space: nowrap;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200;
-            pointer-events: none;
-            letter-spacing: 0.3px;
-            line-height: 1.4;
-            text-align: center;
+            background: rgba(10, 17, 24, 0.98); color: #cbd5e1;
+            padding: 10px 14px; border-radius: 10px; font-size: 0.72rem; font-weight: 500;
+            white-space: nowrap; border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
+            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200; pointer-events: none; letter-spacing: 0.3px; line-height: 1.4; text-align: center;
         }
-
         .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: -16px;
-            left: 50%;
-            transform: translateX(-50%) translateY(5px);
-            border-width: 5px;
-            border-style: solid;
+            content: ''; position: absolute; bottom: -16px; left: 50%;
+            transform: translateX(-50%) translateY(5px); border-width: 5px; border-style: solid;
             border-color: transparent transparent var(--glass-border) transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200;
-            pointer-events: none;
+            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200; pointer-events: none;
         }
-
-        .nav-links a:hover::after,
-        .nav-links a:hover::before {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+        .nav-links a:hover::after, .nav-links a:hover::before {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
         }
 
         /* --- CONTAINER & SEARCH --- */
@@ -144,39 +115,15 @@
 
         .header-content { display: flex; flex-direction: column; gap: 4px; }
         h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px; }
-        
-        .verified-intro {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .verified-intro { font-size: 0.75rem; color: var(--text-dim); font-weight: 500; display: flex; align-items: center; gap: 6px; }
         .verified-intro i { color: var(--success); font-size: 0.7rem; }
 
-        .search-bar {
-            position: relative;
-            flex: 1;
-            max-width: 380px;
-            min-width: 250px;
-        }
-
-        .search-bar i {
-            position: absolute; left: 16px; top: 14px;
-            color: var(--primary); font-size: 0.85rem;
-        }
-
+        .search-bar { position: relative; flex: 1; max-width: 380px; min-width: 250px; }
+        .search-bar i { position: absolute; left: 16px; top: 14px; color: var(--primary); font-size: 0.85rem; }
         .search-bar input {
-            width: 100%;
-            padding: 10px 15px 10px 42px;
-            background: rgba(8, 14, 20, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.85rem;
-            outline: none;
-            transition: all 0.2s ease;
+            width: 100%; padding: 10px 15px 10px 42px;
+            background: rgba(8, 14, 20, 0.85); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px; color: #fff; font-size: 0.85rem; outline: none; transition: all 0.2s ease;
         }
         .search-bar input:focus { border-color: var(--primary); box-shadow: 0 0 12px var(--primary-glow); }
 
@@ -192,11 +139,12 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 18px;
-            overflow: hidden;
+            overflow: visible !important;
             display: flex;
             flex-direction: column;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            position: relative;
         }
         .product-card:hover {
             transform: translateY(-5px);
@@ -205,76 +153,62 @@
         }
 
         .product-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 190px;
-            background: #050b10;
-            overflow: hidden;
+            position: relative; width: 100%; height: 190px;
+            background: #050b10; overflow: hidden;
+            border-top-left-radius: 18px; border-top-right-radius: 18px;
         }
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .product-img { transform: scale(1.05); }
 
-        .product-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .product-body { padding: 20px; display: flex; flex-direction: column; flex: 1; overflow: visible !important; }
         .product-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
         .product-price { font-family: 'Roboto Mono', monospace; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; }
         .product-desc { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 20px; flex: 1; line-height: 1.5; }
 
-        .button-group { display: flex; gap: 10px; }
-
-        /* Modern Styled Buttons */
+        .button-group { display: flex; gap: 10px; position: relative; overflow: visible !important; }
         .btn {
-            flex: 1;
-            padding: 11px 14px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: #091118;
-            border: none;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 4px 12px var(--primary-glow);
-            transition: opacity 0.2s ease, transform 0.1s ease;
+            flex: 1; padding: 11px 14px; background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #091118; border: none; border-radius: 10px; font-weight: 800;
+            font-size: 0.75rem; text-transform: uppercase; cursor: pointer; text-align: center;
+            box-shadow: 0 4px 12px var(--primary-glow); transition: opacity 0.2s ease, transform 0.1s ease; position: relative;
         }
         .btn:hover { opacity: 0.9; }
         .btn:active { transform: scale(0.97); }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: none;
-        }
+        .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: none; }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
+
+        /* Button tooltips */
+        .btn::after {
+            content: attr(data-btn-tooltip);
+            position: absolute; bottom: calc(100% + 12px); left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: rgba(10, 17, 24, 0.98); color: #e2e8f0;
+            padding: 10px 14px; border-radius: 10px; font-size: 0.72rem; font-weight: 500;
+            width: 220px; white-space: normal; line-height: 1.4;
+            border: 1px solid var(--glass-border); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px); opacity: 0; visibility: hidden;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
+            pointer-events: none; text-transform: none; text-align: center;
+        }
+        .btn:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
         /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 8, 12, 0.8);
-            backdrop-filter: blur(12px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000;
-            padding: 20px;
+            background: rgba(4, 8, 12, 0.8); backdrop-filter: blur(12px);
+            display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px;
         }
         .modal {
-            background: #0e1721;
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            width: 480px;
-            max-width: 100%;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #0e1721; border: 1px solid var(--glass-border); border-radius: 24px;
+            width: 480px; max-width: 100%; padding: 30px; position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9); animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes modalPop {
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-
         .modal h3 { margin-bottom: 20px; font-size: 1.35rem; color: var(--primary); font-weight: 800; }
-        .modal-close { 
+        .modal-close {
             position: absolute; right: 22px; top: 22px; width: 32px; height: 32px; border-radius: 50%;
             background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
             color: var(--text-dim); cursor: pointer; font-size: 1rem; transition: all 0.2s ease;
@@ -284,21 +218,17 @@
         .form-group { margin-bottom: 16px; text-align: left; }
         .form-group label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-control {
-            width: 100%; padding: 12px 16px;
-            background: rgba(6, 11, 16, 0.95);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 10px; color: #fff; font-size: 0.85rem;
-            outline: none; transition: border-color 0.2s ease;
+            width: 100%; padding: 12px 16px; background: rgba(6, 11, 16, 0.95);
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #fff;
+            font-size: 0.85rem; outline: none; transition: border-color 0.2s ease;
         }
         .form-control:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
 
         .seller-info {
-            background: rgba(251, 191, 36, 0.05);
-            border: 1px solid rgba(251, 191, 36, 0.15);
+            background: rgba(251, 191, 36, 0.05); border: 1px solid rgba(251, 191, 36, 0.15);
             padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; font-size: 0.85rem; color: #e2e8f0;
         }
         .seller-info strong { color: var(--primary); }
-
         .status-banner { margin-top: 15px; font-size: 0.8rem; text-align: center; display: none; padding: 10px; border-radius: 8px; font-weight: 600; }
     </style>
 </head>
@@ -311,10 +241,12 @@
             </div>
             <span class="brand-title">MarketView <span>[Buyer Terminal]</span></span>
         </div>
+        <!-- Storytelling Navigation with User Manual PDF Download Trigger -->
         <div class="nav-links">
-            <a href="buyer-dashboard.html" class="active" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> Marketplace</a>
-            <a href="buyer-orders.html" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-box"></i> My Purchases</a>
-            <a href="buyer-messages.html" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> Messages</a>
+            <a href="buyer-dashboard.html" class="active" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> 1. Browse Catalog</a>
+            <a href="buyer-orders.html" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-truck-ramp-box"></i> 2. Track Purchases</a>
+            <a href="buyer-messages.html" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> 3. Merchant Chats</a>
+            <a href="#" id="downloadUserManual" data-tooltip="Download the official MarketView User Manual guide file"><i class="fa-solid fa-file-pdf"></i> User Manual</a>
             <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active session and log out of the terminal"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
         </div>
     </nav>
@@ -359,7 +291,7 @@
                     <label>Country</label>
                     <input type="text" id="orderCountry" class="form-control" required placeholder="Enter country">
                 </div>
-                <button type="submit" class="btn" style="width:100%; margin-top: 10px; padding: 13px;" id="submitOrderBtn">Confirm & Place Order</button>
+                <button type="submit" class="btn" style="width:100%; margin-top: 10px; padding: 13px;" id="submitOrderBtn" data-btn-tooltip="Submits your shipping address and places your purchase order">Confirm & Place Order</button>
             </form>
             <div id="modalStatus" class="status-banner"></div>
         </div>
@@ -378,7 +310,7 @@
                     <label>Your Inquiry Message</label>
                     <textarea id="inquiryMessageText" class="form-control" rows="4" required placeholder="Hi, I am interested in inquiring about this product. Is it still available?"></textarea>
                 </div>
-                <button type="submit" class="btn" style="width:100%; margin-top: 10px; padding: 13px;" id="submitInquiryBtn">Send Message to Vendor</button>
+                <button type="submit" class="btn" style="width:100%; margin-top: 10px; padding: 13px;" id="submitInquiryBtn" data-btn-tooltip="Saves your message to the database and opens your inbox">Send Message to Vendor</button>
             </form>
             <div id="inquiryStatus" class="status-banner"></div>
         </div>
@@ -393,17 +325,16 @@
         import { SendMessage } from '../../Cloud/Functions/SendMessage.js';
 
         let selectedProductId = null;
-        let activeSellerId = null;
+        let cachedSellerId = null;
+        let allProductsCache = []; // Cache for robust local & remote search filtering
+
         const productGrid = document.getElementById('productGrid');
         const searchInput = document.getElementById('searchInput');
-        
         const orderModal = document.getElementById('orderModal');
         const closeModal = document.getElementById('closeModal');
-
         const inquiryModal = document.getElementById('inquiryModal');
         const closeInquiryModal = document.getElementById('closeInquiryModal');
 
-        // Load buyer profile details in the navbar
         async function initUserProfile() {
             try {
                 const details = await RetrieveUserDetails();
@@ -420,13 +351,46 @@
         }
         initUserProfile();
 
+        // --- USER MANUAL DIRECT DOWNLOAD TRIGGER ---
+        document.getElementById('downloadUserManual').addEventListener('click', (e) => {
+            e.preventDefault();
+            const manualContent = `
+==================================================
+MARKETVIEW TRADING TERMINAL - OFFICIAL USER MANUAL
+Version 2.0 (2026)
+==================================================
+1. PLATFORM OVERVIEW
+MarketView is a high-performance peer-to-peer digital marketplace and trading platform designed for verified buyers and merchants. The platform provides secure inventory discovery, encrypted direct messaging, and structured order fulfillment tracking.
+
+2. BUYER TERMINAL WORKFLOW
+- Browse Catalog: Explore active vendor listings in real-time. Use the search bar to instantly filter items by name or category.
+- Track Purchases: Monitor your active purchase orders, delivery destination addresses, and real-time fulfillment status badges.
+- Merchant Chats: Open direct inquiries with verified vendors to negotiate terms or ask questions about product availability.
+- Secure Checkout: Click "Purchase" on any item to review verified merchant credentials and submit your delivery destination.
+
+3. SECURITY & COMPLIANCE
+All user sessions are authenticated with role-based routing. Data transmissions between buyers and sellers are encrypted and stored securely within the cloud database infrastructure.
+--------------------------------------------------
+(c) 2026 MarketView Digital Agency. All rights reserved. Confidential Technical Documentation.
+--------------------------------------------------
+            `;
+            const blob = new Blob([manualContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'MarketView_User_Manual.txt';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+        });
+
         function renderProducts(productList) {
             productGrid.innerHTML = '';
             if (!productList || productList.length === 0) {
                 productGrid.innerHTML = '<p style="color: var(--text-dim); grid-column: span 100; text-align: center; padding: 40px;">No products available at the moment.</p>';
                 return;
             }
-
             productList.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -437,11 +401,15 @@
                     </div>
                     <div class="product-body">
                         <div class="product-name">${prod.ProductName || prod.name}</div>
-                        <div class="product-price">$${prod.ProductPrice || prod.price}</div>
+                        <div class="product-price">R${prod.ProductPrice || prod.price}</div>
                         <div class="product-desc">${prod.ProductDescription || prod.description || 'No description provided.'}</div>
                         <div class="button-group">
-                            <button class="btn btn-secondary" onclick="openInquiryModal('${pId}')">Enquire</button>
-                            <button class="btn" onclick="openOrderModal('${pId}')">Purchase</button>
+                            <button class="btn btn-secondary" onclick="openInquiryModal('${pId}')" data-btn-tooltip="Opens direct chat window to ask the vendor questions about this item">
+                                <i class="fa-solid fa-comment"></i> Enquire
+                            </button>
+                            <button class="btn" onclick="openOrderModal('${pId}')" data-btn-tooltip="Opens secure checkout form to purchase this item">
+                                Purchase
+                            </button>
                         </div>
                     </div>
                 `;
@@ -452,7 +420,8 @@
         async function loadMarketplace() {
             try {
                 const data = await RandomProducts();
-                renderProducts(data);
+                allProductsCache = data || [];
+                renderProducts(allProductsCache);
             } catch (err) {
                 console.error("Error loading marketplace products:", err);
                 productGrid.innerHTML = '<p style="color: var(--danger); text-align: center; grid-column: span 100;">Failed to load products.</p>';
@@ -460,18 +429,38 @@
         }
         loadMarketplace();
 
+        // --- ROBUST REAL-TIME SEARCH FILTER ---
         let searchTimeout;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
-                const query = e.target.value.trim();
+                const query = e.target.value.toLowerCase().trim();
                 if (query === '') {
-                    loadMarketplace();
+                    renderProducts(allProductsCache);
                 } else {
-                    const results = await SearchProduct(query);
-                    renderProducts(results);
+                    try {
+                        // Attempt remote search first
+                        let results = await SearchProduct(query);
+                        if (!results || results.length === 0) {
+                            // Fallback to filtering the local cache if remote search returns empty
+                            results = allProductsCache.filter(prod => {
+                                const name = (prod.ProductName || prod.name || '').toLowerCase();
+                                const desc = (prod.ProductDescription || prod.description || '').toLowerCase();
+                                return name.includes(query) || desc.includes(query);
+                            });
+                        }
+                        renderProducts(results);
+                    } catch (err) {
+                        console.error("Search error, falling back to local filter:", err);
+                        const fallbackResults = allProductsCache.filter(prod => {
+                            const name = (prod.ProductName || prod.name || '').toLowerCase();
+                            const desc = (prod.ProductDescription || prod.description || '').toLowerCase();
+                            return name.includes(query) || desc.includes(query);
+                        });
+                        renderProducts(fallbackResults);
+                    }
                 }
-            }, 350);
+            }, 300);
         });
 
         window.openOrderModal = async function(productId) {
@@ -485,7 +474,7 @@
                 if (userDetails && userDetails.length > 0) {
                     const seller = userDetails[0];
                     document.getElementById('sellerInfoContainer').innerHTML = `
-                        <strong>Verified Seller:</strong> ${seller.Name || ''} ${seller.Surname || ''} (@${seller.Username || 'unknown'})
+                        <strong>Verified Seller:</strong> ${seller.Name || seller.name || ''} ${seller.Surname || seller.surname || ''} (@${seller.Username || seller.username || 'unknown'})
                     `;
                 } else {
                     document.getElementById('sellerInfoContainer').innerHTML = 'Seller verification unavailable.';
@@ -501,14 +490,22 @@
             document.getElementById('inquirySellerInfo').innerHTML = 'Retrieving vendor details...';
             document.getElementById('inquiryStatus').style.display = 'none';
             document.getElementById('inquiryMessageText').value = '';
+            cachedSellerId = null;
 
             try {
                 const userDetails = await RetrieveProductUserDetails(productId);
                 if (userDetails && userDetails.length > 0) {
                     const seller = userDetails[0];
-                    activeSellerId = seller.id || seller.UserId || seller.userid;
+                    for (let key in seller) {
+                        const lowerKey = key.toLowerCase();
+                        if ((lowerKey.includes('id') || lowerKey.includes('uuid')) && seller[key]) {
+                            cachedSellerId = seller[key];
+                            break;
+                        }
+                    }
                     document.getElementById('inquirySellerInfo').innerHTML = `
-                        <strong>Vendor:</strong> ${seller.Name || ''} ${seller.Surname || ''} (@${seller.Username || 'unknown'})
+                        <strong>Vendor:</strong> ${seller.Name || seller.name || ''} ${seller.Surname || seller.surname || ''} (@${seller.Username || seller.username || 'unknown'})<br>
+                        <span style="font-size: 0.65rem; color: var(--success); font-family: 'Roboto Mono', monospace;">ID Resolved: ${cachedSellerId ? 'SUCCESS' : 'FAILED'}</span>
                     `;
                 } else {
                     document.getElementById('inquirySellerInfo').innerHTML = 'Vendor information unavailable.';
@@ -534,7 +531,6 @@
 
             try {
                 const response = await PlaceProductOrder(selectedProductId, address, city, country);
-                
                 statusBanner.style.display = 'block';
                 if (response) {
                     statusBanner.style.background = 'rgba(52, 211, 153, 0.15)';
@@ -565,17 +561,26 @@
             const messageText = document.getElementById('inquiryMessageText').value.trim();
             const statusBanner = document.getElementById('inquiryStatus');
 
-            if (!activeSellerId) {
-                alert('Vendor recipient ID not found.');
-                return;
-            }
-
             btn.disabled = true;
-            btn.innerHTML = 'Sending Inquiry...';
+            btn.innerHTML = 'Transmitting Message...';
+            statusBanner.style.display = 'none';
 
             try {
-                const response = await SendMessage(activeSellerId, messageText, selectedProductId);
-                
+                let recipientId = cachedSellerId;
+                if (!recipientId && selectedProductId) {
+                    const userDetails = await RetrieveProductUserDetails(selectedProductId);
+                    if (userDetails && userDetails.length > 0) {
+                        const seller = userDetails[0];
+                        recipientId = seller.id || seller.UserId || seller.userid || seller.user_id || seller.ID || seller.Accountid || seller.accountid || seller.uuid;
+                    }
+                }
+                if (!recipientId) {
+                    throw new Error('Vendor recipient ID could not be resolved.');
+                }
+
+                const finalMessage = `[Product Inquiry Ref: #${selectedProductId}]\n${messageText}`;
+                await SendMessage(recipientId, finalMessage);
+
                 statusBanner.style.display = 'block';
                 statusBanner.style.background = 'rgba(52, 211, 153, 0.15)';
                 statusBanner.style.color = '#34d399';
@@ -585,12 +590,12 @@
                     btn.disabled = false;
                     btn.innerHTML = 'Send Message to Vendor';
                     window.location.href = 'buyer-messages.html';
-                }, 1200);
+                }, 1000);
             } catch (err) {
                 statusBanner.style.display = 'block';
                 statusBanner.style.background = 'rgba(248, 113, 113, 0.15)';
                 statusBanner.style.color = '#f87171';
-                statusBanner.textContent = 'Failed to send inquiry. Try again.';
+                statusBanner.textContent = 'Error: ' + (err.message || JSON.stringify(err));
                 btn.disabled = false;
                 btn.innerHTML = 'Send Message to Vendor';
             }

@@ -62,63 +62,34 @@
         .brand-title { font-size: 1.15rem; font-weight: 800; letter-spacing: 1.5px; color: var(--text-main); text-transform: uppercase; }
         .brand-title span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; }
+        .nav-links { display: flex; gap: 24px; align-items: center; position: relative; flex-wrap: wrap; }
         .nav-links a {
             color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            transition: color 0.2s ease;
-            display: flex; align-items: center; gap: 6px;
-            position: relative;
+            transition: color 0.2s ease; display: flex; align-items: center; gap: 6px; position: relative;
         }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
         /* --- DETAILED HOVER TOOLTIP STYLING --- */
         .nav-links a::after {
             content: attr(data-tooltip);
-            position: absolute;
-            bottom: -48px;
-            left: 50%;
+            position: absolute; bottom: -48px; left: 50%;
             transform: translateX(-50%) translateY(5px);
-            background: rgba(10, 17, 24, 0.98);
-            color: #cbd5e1;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 0.72rem;
-            font-weight: 500;
-            white-space: nowrap;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200;
-            pointer-events: none;
-            letter-spacing: 0.3px;
-            line-height: 1.4;
-            text-align: center;
+            background: rgba(10, 17, 24, 0.98); color: #cbd5e1;
+            padding: 10px 14px; border-radius: 10px; font-size: 0.72rem; font-weight: 500;
+            white-space: nowrap; border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
+            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200; pointer-events: none; letter-spacing: 0.3px; line-height: 1.4; text-align: center;
         }
-
         .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: -16px;
-            left: 50%;
-            transform: translateX(-50%) translateY(5px);
-            border-width: 5px;
-            border-style: solid;
+            content: ''; position: absolute; bottom: -16px; left: 50%;
+            transform: translateX(-50%) translateY(5px); border-width: 5px; border-style: solid;
             border-color: transparent transparent var(--glass-border) transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 200;
-            pointer-events: none;
+            opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200; pointer-events: none;
         }
-
-        .nav-links a:hover::after,
-        .nav-links a:hover::before {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+        .nav-links a:hover::after, .nav-links a:hover::before {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
         }
 
         /* --- CONTAINER & CARD --- */
@@ -138,24 +109,19 @@
         }
 
         .header-section {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 20px;
+            display: flex; flex-direction: column; gap: 4px;
+            margin-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 20px;
         }
 
-        h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        
+        h1 {
+            font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; color: #fff;
+            display: flex; align-items: center; gap: 10px;
+        }
+        h1 i { color: var(--primary); }
+
         .verified-intro {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 4px;
+            font-size: 0.75rem; color: var(--text-dim); font-weight: 500;
+            display: flex; align-items: center; gap: 6px; margin-top: 4px;
         }
         .verified-intro i { color: var(--success); font-size: 0.7rem; }
 
@@ -163,15 +129,9 @@
         .order-list { display: flex; flex-direction: column; gap: 16px; }
 
         .order-item {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            background: var(--glass-card); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 22px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 20px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
@@ -180,20 +140,17 @@
             box-shadow: 0 12px 30px rgba(251, 191, 36, 0.1);
         }
 
-        .order-details h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: #fff; font-family: 'Roboto Mono', monospace; }
+        .order-details h3 {
+            font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: #fff;
+            font-family: 'Roboto Mono', monospace;
+        }
         .order-meta { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
         .order-meta i { color: var(--primary); margin-right: 5px; }
 
         .status-badge {
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--primary);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            letter-spacing: 0.5px;
+            padding: 7px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; background: rgba(245, 158, 11, 0.12); color: var(--primary);
+            border: 1px solid rgba(245, 158, 11, 0.3); letter-spacing: 0.5px;
         }
 
         .empty-state { text-align: center; color: var(--text-dim); padding: 50px; font-size: 0.85rem; }
@@ -209,9 +166,9 @@
             <span class="brand-title">MarketView <span>[Buyer Terminal]</span></span>
         </div>
         <div class="nav-links">
-            <a href="buyer-dashboard.html" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> Marketplace</a>
-            <a href="buyer-orders.html" class="active" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-box"></i> My Purchases</a>
-            <a href="buyer-messages.html" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> Messages</a>
+            <a href="buyer-dashboard.html" data-tooltip="Browse verified vendor catalog, search items, and place direct purchase orders"><i class="fa-solid fa-store"></i> 1. Browse Catalog</a>
+            <a href="buyer-orders.html" class="active" data-tooltip="Track active delivery shipments, fulfillment progress, and past order records"><i class="fa-solid fa-truck-ramp-box"></i> 2. Track Purchases</a>
+            <a href="buyer-messages.html" data-tooltip="Securely chat with verified vendors and manage direct product inquiries"><i class="fa-solid fa-comments"></i> 3. Merchant Chats</a>
             <a href="../SignUp.html" style="color: var(--danger);" data-tooltip="Securely terminate your active session and log out of the terminal"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
         </div>
     </nav>
@@ -219,7 +176,7 @@
     <div class="container">
         <div class="card">
             <div class="header-section">
-                <h1>Placed Purchase Orders</h1>
+                <h1><i class="fa-solid fa-truck-ramp-box"></i> Placed Purchase Orders</h1>
                 <div class="verified-intro">
                     <i class="fa-solid fa-shield-check"></i> Monitor fulfillment status and track verified acquisitions across the marketplace.
                 </div>
